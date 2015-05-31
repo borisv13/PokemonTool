@@ -12,4 +12,12 @@
         android:id="@+id/buttonDatabase"
         android:onClick="goToPlayerNotes" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/roll_dice"
+        android:id="@+id/buttonDice"
+        android:onClick="goToRollDice" />
+
+
 </LinearLayout>

@@ -12,4 +12,9 @@
     <string name="title_activity_player_notes">PlayerNotesActivity</string>
 
     <string name="hello_world">Hello world!</string>
+
+    <string name="roll_dice">Roll Dice</string>
+    <string name="title_roll_dice_activity">Roll Dice Activity</string>
+    <string name="get_dice_shape"><font size="10">Enter number of dice sides</font></string>
+
 </resources>
