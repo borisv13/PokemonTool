@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">PokemonTool</string>
 
-    <string name="hello_world">How do you do, world?</string>
     <string name="action_settings">Settings</string>
 
     <string name="player_notes">Player Notes</string>
     <string name="title_activity_player_notes_database">PlayerNotesDatabaseActivity</string>
+
+    <string name="save_button">Save</string>
+    <string name="delete_button">Delete</string>
+    <string name="player_name_message">Enter a name</string>
+    <string name="title_activity_player_notes">PlayerNotesActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
