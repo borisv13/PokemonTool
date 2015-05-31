@@ -45,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
 
 
     public void goToRollDice(View view) {
-        Intent intent = new Intent(this, RollDiceActivity.class);
+        Intent intent = new Intent(this, RollDieActivity.class);
         startActivity(intent);
     }
 }

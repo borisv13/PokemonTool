@@ -3,14 +3,14 @@ package com.boris.pokemontool;
 import java.util.Random;
 
 
-public class Dice {
+public class Die {
     private int numberOfSides;
 
-    public Dice (int numberOfSides){
+    public Die(int numberOfSides){
         this.numberOfSides = numberOfSides;
     }
 
-    public Dice (){
+    public Die(){
         this.numberOfSides = 2;
     }
 

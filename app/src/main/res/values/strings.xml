@@ -13,8 +13,8 @@
 
     <string name="hello_world">Hello world!</string>
 
-    <string name="roll_dice">Roll Dice</string>
-    <string name="title_roll_dice_activity">Roll Dice Activity</string>
-    <string name="get_dice_shape"><font size="10">Enter number of dice sides</font></string>
+    <string name="roll_die">Roll Die</string>
+    <string name="title_roll_die_activity">Roll Die Activity</string>
+    <string name="get_die_shape"><font size="10">Enter number of die sides</font></string>
 
 </resources>
