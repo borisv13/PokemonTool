@@ -8,17 +8,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class RollDiceActivity extends ActionBarActivity {
+public class RollDieActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_roll_dice);
+        setContentView(R.layout.activity_roll_die);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_roll_dice, menu);
+        getMenuInflater().inflate(R.menu.menu_roll_die, menu);
         return true;
     }
 
@@ -45,8 +45,8 @@ public class RollDiceActivity extends ActionBarActivity {
         diceSideCount=Integer.parseInt(diceSides.getText().toString());
         TextView result = (TextView) findViewById(R.id.textDiceRollResult);
 
-        Dice Dice = new Dice(diceSideCount);
-        diceRollResult = Dice.roll();
+        Die Die = new Die(diceSideCount);
+        diceRollResult = Die.roll();
 
         result.setText(Integer.toString(diceRollResult));
 
