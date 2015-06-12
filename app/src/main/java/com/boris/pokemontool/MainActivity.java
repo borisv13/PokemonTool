@@ -1,11 +1,17 @@
 package com.boris.pokemontool;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -47,5 +53,57 @@ public class MainActivity extends ActionBarActivity {
     public void goToRollDice(View view) {
         Intent intent = new Intent(this, RollDieActivity.class);
         startActivity(intent);
+    }
+
+    private String URL_NEW_PREDICTION = "http://10.0.3.2/scripts/updatePoison.php";
+
+    public void addDB(View view) {
+        new UpdateDB().execute();
+    }
+
+    private class UpdateDB extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Void doInBackground(String... arg) {
+            ServiceHandler serviceClient = new ServiceHandler();
+
+            String json = serviceClient.makeServiceCall(URL_NEW_PREDICTION,
+                    ServiceHandler.POST, null);
+
+            Log.d("Create Request: ", "> " + json);
+            if (json != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(json);
+                    boolean error = jsonObj.getBoolean("error");
+                    // checking for error node in json
+                    if (!error) {
+                        // new category created successfully
+                        Log.e("Added ",
+                                "> " + jsonObj.getString("message"));
+                    } else {
+                        Log.e("Error: ",
+                                "> " + jsonObj.getString("message"));
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                Log.e("JSON Data", "JSON data error!");
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
     }
 }

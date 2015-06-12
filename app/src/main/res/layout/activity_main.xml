@@ -20,4 +20,11 @@
         android:onClick="goToRollDice" />
 
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_db"
+        android:id="@+id/buttonAddDB"
+        android:onClick="addDB" />
+
 </LinearLayout>

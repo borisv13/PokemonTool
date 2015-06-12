@@ -17,4 +17,6 @@
     <string name="title_roll_die_activity">Roll Die Activity</string>
     <string name="get_die_shape"><font size="10">Enter number of die sides</font></string>
 
+
+    <string name="add_db">Add to DB</string>
 </resources>
