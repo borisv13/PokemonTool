@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="@string/roll_die"
         android:id="@+id/buttonRollDice"
-        android:onClick="clickRollDice"
+        android:onClick="clickRollDie"
         android:layout_marginLeft="17dp"
         android:layout_marginStart="17dp"
         android:layout_alignBottom="@+id/editDiceSides"

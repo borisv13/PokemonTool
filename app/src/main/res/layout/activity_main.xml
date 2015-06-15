@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/roll_die"
         android:id="@+id/buttonDice"
-        android:onClick="goToRollDice" />
+        android:onClick="goToRollDie" />
 
 
     <Button
@@ -26,5 +26,14 @@
         android:text="@string/add_db"
         android:id="@+id/buttonAddDB"
         android:onClick="addDB" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonBurned"
+        android:src="@drawable/burned_off"
+        android:cropToPadding="false"
+        android:onClick="clickBurned"
+        android:background="@android:color/transparent" />
 
 </LinearLayout>

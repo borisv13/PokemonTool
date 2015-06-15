@@ -37,7 +37,7 @@ public class RollDieActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void clickRollDice(View view){
+    public void clickRollDie(View view){
         int diceRollResult;
         int diceSideCount;
 

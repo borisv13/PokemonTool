@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.util.Log;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +52,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    public void goToRollDice(View view) {
+    public void goToRollDie(View view) {
         Intent intent = new Intent(this, RollDieActivity.class);
         startActivity(intent);
     }
@@ -104,6 +106,16 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+        }
+    }
+
+    private Toggle Burned = new Toggle(false);
+    public void clickBurned(View view){
+        ImageButton button = (ImageButton)findViewById(R.id.buttonBurned);
+        if (Burned.flip()){
+            button.setImageDrawable(getResources().getDrawable(R.drawable.burned_on));
+        } else {
+            button.setImageDrawable(getResources().getDrawable(R.drawable.burned_off));
         }
     }
 }
