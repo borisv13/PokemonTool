@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:text="@string/roll_die"
         android:id="@+id/buttonDice"
-        android:onClick="goToRollDie" />
+        android:onClick="goToRollDie"
+        android:rotation="180"/>
 
 
     <Button
