@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:id="@+id/linlay">
 
     <Button
         android:layout_width="wrap_content"
@@ -31,8 +32,8 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonBurned"
-        android:src="@drawable/burned_off"
+        android:id="@+id/buttonAsleep"
+        android:src="@drawable/asleep"
         android:cropToPadding="false"
         android:onClick="clickBurned"
         android:background="@android:color/transparent" />

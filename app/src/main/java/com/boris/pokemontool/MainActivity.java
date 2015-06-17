@@ -109,13 +109,13 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    private Toggle Burned = new Toggle(false);
+    private Toggle Asleep = new Toggle(false);
     public void clickBurned(View view){
-        ImageButton button = (ImageButton)findViewById(R.id.buttonBurned);
-        if (Burned.flip()){
-            button.setImageDrawable(getResources().getDrawable(R.drawable.burned_on));
+        ImageButton button = (ImageButton)findViewById(R.id.buttonAsleep);
+        if (Asleep.flip()){
+            //button.setImageDrawable(getResources().getDrawable(R.drawable.burned_on));
         } else {
-            button.setImageDrawable(getResources().getDrawable(R.drawable.burned_off));
+            //button.setImageDrawable(getResources().getDrawable(R.drawable.burned_off));
         }
     }
 }
