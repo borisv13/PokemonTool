@@ -1,6 +1,7 @@
 package com.boris.pokemontool;
 
 import android.content.Intent;
+import android.graphics.drawable.LevelListDrawable;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import org.json.JSONException;
@@ -110,12 +110,65 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private Toggle Asleep = new Toggle(false);
-    public void clickBurned(View view){
-        ImageButton button = (ImageButton)findViewById(R.id.buttonAsleep);
-        if (Asleep.flip()){
-            //button.setImageDrawable(getResources().getDrawable(R.drawable.burned_on));
+    public void clickAsleep(View view){
+        //ImageButton button = (ImageButton)findViewById(R.id.buttonAsleep);
+        ImageButton button = (ImageButton)view;
+        //Drawable background = button.getBackground();
+        //Drawable face = button.getDrawable();
+
+        if (Asleep.toggle()){
+            button.setImageDrawable(getResources().getDrawable(R.drawable.asleep_on, getTheme()));
+            //((Animatable) face).start();
         } else {
-            //button.setImageDrawable(getResources().getDrawable(R.drawable.burned_off));
+            button.setImageDrawable(getResources().getDrawable(R.drawable.asleep_off, getTheme()));
+        }
+    }
+
+    private Toggle Poisoned = new Toggle(false);
+    public void clickPoisoned(View view){
+        ImageButton button = (ImageButton)view;
+
+        if (Poisoned.toggle()){
+            button.setImageDrawable(getResources().getDrawable(R.drawable.poisoned_on, getTheme()));
+        } else {
+            button.setImageDrawable(getResources().getDrawable(R.drawable.poisoned_off, getTheme()));
+        }
+    }
+
+    private Toggle Paralyzed = new Toggle(false);
+    public void clickParalyzed(View view){
+        ImageButton button = (ImageButton)view;
+        LevelListDrawable pic = (LevelListDrawable)button.getDrawable();
+
+        if (Paralyzed.toggle()){
+            pic.setLevel(1);
+            //Asleep.off(); // this isn't going to be pretty without checkable buttons
+        } else {
+            pic.setLevel(0);
+        }
+    }
+
+    private Toggle Burned = new Toggle(false);
+    public void clickBurned(View view){
+        ImageButton button = (ImageButton)view;
+
+        if (Burned.toggle()){
+            button.setImageDrawable(getResources().getDrawable(R.drawable.burned_on, getTheme()));
+            //Asleep.off(); // this isn't going to be pretty without checkable buttons
+        } else {
+            button.setImageDrawable(getResources().getDrawable(R.drawable.burned_off, getTheme()));
+        }
+    }
+
+    private Toggle Confused = new Toggle(false);
+    public void clickConfused(View view){
+        ImageButton button = (ImageButton)view;
+
+        if (Confused.toggle()){
+            button.setImageDrawable(getResources().getDrawable(R.drawable.confused_on, getTheme()));
+            //Asleep.off(); // this isn't going to be pretty without checkable buttons
+        } else {
+            button.setImageDrawable(getResources().getDrawable(R.drawable.confused_off, getTheme()));
         }
     }
 }
