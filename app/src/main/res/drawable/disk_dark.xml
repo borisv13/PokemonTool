@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#ff303030"/> <!-- Fully transparent Alpha value #00RRGGBB = no elevation-->
+    <size
+        android:height="56dp"
+        android:width="56dp"/>
+
+</shape>

@@ -12,7 +12,7 @@ public class Toggle {
     public boolean getState() {return this.state;}
     public void on() {this.state = true;}
     public void off() {this.state = false;}
-    public boolean flip() {
+    public boolean toggle() {
         this.state = !this.state;
         return this.state;
     }
