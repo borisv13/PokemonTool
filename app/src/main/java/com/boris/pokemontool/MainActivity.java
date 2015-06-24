@@ -15,16 +15,67 @@ import android.view.View;
 import android.util.Log;
 import android.widget.ImageButton;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+import android.os.Handler;
+
 
 public class MainActivity extends ActionBarActivity {
+
+    private final static int INTERVAL = 1000 * 30 ; //2 minutes
+    Handler dbCallHandler = new Handler();
+
+    private int poisonCount = 0;
+    private int burnCount = 0;
+    private int sleepCount = 0;
+    private int paralyzeCount = 0;
+    private int confuseCount = 0;
+
+    Runnable dbCallHandlerTask = new Runnable() {
+        @Override
+        public void run() {
+            if(determineIfDBCallNeeded()) {
+                new UpdateDB().execute();
+            }
+            dbCallHandler.postDelayed(dbCallHandlerTask, INTERVAL);
+        }
+    };
+
+    void startRepeatingTask() {
+        dbCallHandlerTask.run();
+    }
+
+    void stopRepeatingTask() {
+        dbCallHandler.removeCallbacks(dbCallHandlerTask);
+    }
+
+
+    private boolean determineIfDBCallNeeded() {
+        if(poisonCount > 0)
+            return true;
+        else if(burnCount > 0)
+            return true;
+        else if(poisonCount > 0)
+            return true;
+        else if(paralyzeCount > 0)
+            return true;
+        else if(confuseCount > 0)
+            return true;
+        else
+            return false;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startRepeatingTask();
     }
 
     @Override
@@ -60,10 +111,24 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    private String URL_NEW_PREDICTION = "http://10.0.3.2/scripts/updatePoison.php";
+    private final String URL_NEW_PREDICTION = "http://10.0.3.2:8080/scripts/update.php";
+    private final String POISON = "POISON";
+    private final String BURN = "BURN";
+    private final String PARALYZE = "PARALYZE";
+    private final String SLEEP = "SLEEP";
+    private final String CONFUSE = "CONFUSE";
+
 
     public void addDB(View view) {
         new UpdateDB().execute();
+    }
+
+    private void resetCounters() {
+        poisonCount = 0;
+        burnCount = 0;
+        sleepCount = 0;
+        paralyzeCount = 0;
+        confuseCount = 0;
     }
 
     private class UpdateDB extends AsyncTask<String, Void, Void> {
@@ -76,33 +141,22 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected Void doInBackground(String... arg) {
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair(POISON, Integer.toString(poisonCount)));
+            params.add(new BasicNameValuePair(BURN, Integer.toString(burnCount)));
+            params.add(new BasicNameValuePair(SLEEP, Integer.toString(sleepCount)));
+            params.add(new BasicNameValuePair(PARALYZE, Integer.toString(paralyzeCount)));
+            params.add(new BasicNameValuePair(CONFUSE, Integer.toString(confuseCount)));
+
             ServiceHandler serviceClient = new ServiceHandler();
 
             String json = serviceClient.makeServiceCall(URL_NEW_PREDICTION,
-                    ServiceHandler.POST, null);
+                    ServiceHandler.POST, params);
 
-            Log.d("Create Request: ", "> " + json);
-            if (json != null) {
-                try {
-                    JSONObject jsonObj = new JSONObject(json);
-                    boolean error = jsonObj.getBoolean("error");
-                    // checking for error node in json
-                    if (!error) {
-                        // new category created successfully
-                        Log.e("Added ",
-                                "> " + jsonObj.getString("message"));
-                    } else {
-                        Log.e("Error: ",
-                                "> " + jsonObj.getString("message"));
-                    }
+            resetCounters();
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            Log.d("DB", "Sent update request.");
 
-            } else {
-                Log.e("JSON Data", "JSON data error!");
-            }
             return null;
         }
 
@@ -113,16 +167,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private Toggle Asleep = new Toggle(false);
+
     public void clickAsleep(View view) {
-        //ImageButton button = (ImageButton)findViewById(R.id.buttonAsleep);
-        //Drawable background = button.getBackground();
-        //Drawable face = button.getDrawable();
         ImageButton button = (ImageButton) view;
         LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
 
         if (Asleep.toggle()) {
             pic.setLevel(1);
-            //button.setImageDrawable(getResources().getDrawable(R.drawable.asleep_on, getTheme()));
+            sleepCount++;
         } else {
             pic.setLevel(0);
             //button.setImageDrawable(getResources().getDrawable(R.drawable.asleep_off, getTheme()));
@@ -136,7 +188,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (Confused.toggle()) {
             pic.setLevel(1);
-            //Asleep.off(); // this isn't going to be pretty without checkable buttons
+            confuseCount++;
         } else {
             pic.setLevel(0);
         }
@@ -148,6 +200,7 @@ public class MainActivity extends ActionBarActivity {
         LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
 
         if (Paralyzed.toggle()) {
+            paralyzeCount++;
             pic.setLevel(1);
             //Asleep.off(); // this isn't going to be pretty without checkable buttons
         } else {
@@ -162,6 +215,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (Burned.toggle()) {
             pic.setLevel(1);
+            burnCount++;
         } else {
             pic.setLevel(0);
         }
@@ -174,6 +228,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (Poisoned.toggle()) {
             pic.setLevel(1);
+            poisonCount++;
         } else {
             pic.setLevel(0);
         }
