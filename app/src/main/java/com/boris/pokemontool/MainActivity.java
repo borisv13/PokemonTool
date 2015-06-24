@@ -12,16 +12,45 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+import android.os.Handler;
+
 
 public class MainActivity extends ActionBarActivity {
+
+    private final static int INTERVAL = 1000 * 30 ; //2 minutes
+    Handler dbCallHandler = new Handler();
+
+    Runnable dbCallHandlerTask = new Runnable() {
+        @Override
+        public void run() {
+            new UpdateDB().execute();
+            dbCallHandler.postDelayed(dbCallHandlerTask, INTERVAL);
+        }
+    };
+
+    void startRepeatingTask() {
+        dbCallHandlerTask.run();
+    }
+
+    void stopRepeatingTask() {
+        dbCallHandler.removeCallbacks(dbCallHandlerTask);
+    }
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startRepeatingTask();
     }
 
     @Override
@@ -57,7 +86,13 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    private String URL_NEW_PREDICTION = "http://10.0.3.2/scripts/updatePoison.php";
+    private final String URL_NEW_PREDICTION = "http://10.0.3.2:8080/scripts/update.php";
+    private final String POISON = "POISON";
+    private final String BURN = "BURN";
+    private final String PARALYZE = "PARALYZE";
+    private final String SLEEP = "SLEEP";
+    private final String CONFUSE = "CONFUSE";
+
 
     public void addDB(View view) {
         new UpdateDB().execute();
@@ -73,33 +108,20 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected Void doInBackground(String... arg) {
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair(POISON, "1"));
+            params.add(new BasicNameValuePair(BURN, "2"));
+            params.add(new BasicNameValuePair(SLEEP, "3"));
+            params.add(new BasicNameValuePair(PARALYZE, "4"));
+            params.add(new BasicNameValuePair(CONFUSE, "5"));
+
             ServiceHandler serviceClient = new ServiceHandler();
 
             String json = serviceClient.makeServiceCall(URL_NEW_PREDICTION,
-                    ServiceHandler.POST, null);
+                    ServiceHandler.POST, params);
 
-            Log.d("Create Request: ", "> " + json);
-            if (json != null) {
-                try {
-                    JSONObject jsonObj = new JSONObject(json);
-                    boolean error = jsonObj.getBoolean("error");
-                    // checking for error node in json
-                    if (!error) {
-                        // new category created successfully
-                        Log.e("Added ",
-                                "> " + jsonObj.getString("message"));
-                    } else {
-                        Log.e("Error: ",
-                                "> " + jsonObj.getString("message"));
-                    }
+            Log.d("DB", "Sent update request.");
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            } else {
-                Log.e("JSON Data", "JSON data error!");
-            }
             return null;
         }
 
