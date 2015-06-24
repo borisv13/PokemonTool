@@ -1,5 +1,7 @@
 package com.boris.pokemontool;
 
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.drawable.LevelListDrawable;
 import android.os.AsyncTask;
@@ -110,13 +112,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private Toggle Asleep = new Toggle(false);
-    public void clickAsleep(View view){
+
+    public void clickAsleep(View view) {
         //ImageButton button = (ImageButton)findViewById(R.id.buttonAsleep);
-        ImageButton button = (ImageButton)view;
+        ImageButton button = (ImageButton) view;
         //Drawable background = button.getBackground();
         //Drawable face = button.getDrawable();
 
-        if (Asleep.toggle()){
+        if (Asleep.toggle()) {
             button.setImageDrawable(getResources().getDrawable(R.drawable.asleep_on, getTheme()));
             //((Animatable) face).start();
         } else {
@@ -125,10 +128,11 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private Toggle Poisoned = new Toggle(false);
-    public void clickPoisoned(View view){
-        ImageButton button = (ImageButton)view;
 
-        if (Poisoned.toggle()){
+    public void clickPoisoned(View view) {
+        ImageButton button = (ImageButton) view;
+
+        if (Poisoned.toggle()) {
             button.setImageDrawable(getResources().getDrawable(R.drawable.poisoned_on, getTheme()));
         } else {
             button.setImageDrawable(getResources().getDrawable(R.drawable.poisoned_off, getTheme()));
@@ -136,11 +140,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private Toggle Paralyzed = new Toggle(false);
-    public void clickParalyzed(View view){
-        ImageButton button = (ImageButton)view;
-        LevelListDrawable pic = (LevelListDrawable)button.getDrawable();
 
-        if (Paralyzed.toggle()){
+    public void clickParalyzed(View view) {
+        ImageButton button = (ImageButton) view;
+        LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
+
+        if (Paralyzed.toggle()) {
             pic.setLevel(1);
             //Asleep.off(); // this isn't going to be pretty without checkable buttons
         } else {
@@ -149,10 +154,11 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private Toggle Burned = new Toggle(false);
-    public void clickBurned(View view){
-        ImageButton button = (ImageButton)view;
 
-        if (Burned.toggle()){
+    public void clickBurned(View view) {
+        ImageButton button = (ImageButton) view;
+
+        if (Burned.toggle()) {
             button.setImageDrawable(getResources().getDrawable(R.drawable.burned_on, getTheme()));
             //Asleep.off(); // this isn't going to be pretty without checkable buttons
         } else {
@@ -161,14 +167,23 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private Toggle Confused = new Toggle(false);
-    public void clickConfused(View view){
-        ImageButton button = (ImageButton)view;
 
-        if (Confused.toggle()){
+    public void clickConfused(View view) {
+        ImageButton button = (ImageButton) view;
+
+        if (Confused.toggle()) {
             button.setImageDrawable(getResources().getDrawable(R.drawable.confused_on, getTheme()));
             //Asleep.off(); // this isn't going to be pretty without checkable buttons
         } else {
             button.setImageDrawable(getResources().getDrawable(R.drawable.confused_off, getTheme()));
         }
+    }
+
+    public void clickCoin(View view){
+
+        ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.flip);
+        anim.setTarget(view);
+        anim.setDuration(1000);
+        anim.start();
     }
 }

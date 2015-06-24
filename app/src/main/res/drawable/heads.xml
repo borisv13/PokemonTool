@@ -1,0 +1,63 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:viewportHeight="390.899"
+    android:viewportWidth="390.899"
+    android:height="100dp"
+    android:width="100dp">
+    <path
+        android:name="rim"
+        android:fillColor="#FFCA05"
+        android:strokeColor="#000000"
+        android:strokeWidth="8"
+        android:pathData="M4,195.45 a191.45,191.45 0 1,0 382.9,0 a191.45,191.45 0 1,0 -382.9,0 z"/>
+	<path
+		android:name="nose"
+		android:fillColor="#000000"
+		android:pathData="M183.289,197.071l12.789,11.581l10.789-12.123C194.504,185.437,183.289,197.071,183.289,197.071z"/>
+	<path
+		android:name="throat"
+		android:fillColor="#603813"
+		android:pathData="M169.105,242.837c2.064,4.995,4.113,9.547,6.142,13.648c13.9-15.037,25.304-15.307,44.287-1.573
+		c1.35-4.259,2.745-9.27,4.01-14.561c-8.365-2.332-16.691-7.072-21.789-10.321c-3.096-1.973-5.005-3.397-5.005-3.397
+		s-1.729,1.524-4.538,3.661C186.977,234.276,177.739,240.452,169.105,242.837z"/>
+	<path
+		android:name="tongue"
+		android:fillColor="#FF0000"
+		android:pathData="M219.514,254.978c-12.113,38.159-27.533,35.328-44.264,1.513l-0.002-0.005
+			c0.449-0.485,0.895-0.954,1.339-1.409c12.8-13.112,23.722-13.441,40.889-1.614c0.678,0.466,1.361,0.946,2.059,1.45
+			L219.514,254.978z"/>
+	<path
+		android:name="mouth"
+		android:strokeColor="#000000"
+		android:strokeWidth="1"
+		android:pathData="M169.083,242.784c21,50.849,40.375,56.386,54.375-2.183"/>
+	<path
+		android:name="Whiskers"
+		android:strokeColor="#000000"
+		android:strokeWidth="1"
+		android:pathData="M148.251,231.509c8.748,30.207,48.499-4.876,48.499-4.876s43.625,32.584,52.583,2.083"/>
+	<path
+		android:name="right_cheek"
+		android:fillColor="#FF0000"
+		android:pathData="M286.847,240.439 a29.5,29.5 0 1,0 59,0 a29.5,29.5 0 1,0 -59,0 z"/>
+	<path
+		android:name="left_cheek"
+		android:fillColor="#FF0000"
+		android:pathData="M43.169,240.939 a29.5,29.5 0 1,0 59,0 a29.5,29.5 0 1,0 -59,0 z"/>
+	<path
+		android:name="right_eye"
+		android:fillColor="#000000"
+		android:pathData="M259.396,170.132 a29,29 0 1,0 58,0 a29,29 0 1,0 -58,0 z"/>
+	<path
+		android:name="left_eye"
+		android:fillColor="#000000"
+		android:pathData="M71.333,170.133 a30.5,30.5 0 1,0 61,0 a30.5,30.5 0 1,0 -61,0 z"/>
+	<path
+		android:name="right_pupil"
+		android:fillColor="#FFFFFF"
+		android:pathData="M272.417,158.307 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 z"/>
+	<path
+		android:name="left_pupil"
+		android:fillColor="#FFFFFF"
+		android:pathData="M87.305,156.966 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0 z"/>
+
+</vector>
