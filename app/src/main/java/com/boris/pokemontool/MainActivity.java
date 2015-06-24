@@ -29,10 +29,18 @@ public class MainActivity extends ActionBarActivity {
     private final static int INTERVAL = 1000 * 30 ; //2 minutes
     Handler dbCallHandler = new Handler();
 
+    private int poisonCount = 0;
+    private int burnCount = 0;
+    private int sleepCount = 0;
+    private int paralyzeCount = 0;
+    private int confuseCount = 0;
+
     Runnable dbCallHandlerTask = new Runnable() {
         @Override
         public void run() {
-            new UpdateDB().execute();
+            if(determineIfDBCallNeeded()) {
+                new UpdateDB().execute();
+            }
             dbCallHandler.postDelayed(dbCallHandlerTask, INTERVAL);
         }
     };
@@ -46,6 +54,20 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+    private boolean determineIfDBCallNeeded() {
+        if(poisonCount > 0)
+            return true;
+        else if(burnCount > 0)
+            return true;
+        else if(poisonCount > 0)
+            return true;
+        else if(paralyzeCount > 0)
+            return true;
+        else if(confuseCount > 0)
+            return true;
+        else
+            return false;
+    }
 
 
     @Override
@@ -100,6 +122,14 @@ public class MainActivity extends ActionBarActivity {
         new UpdateDB().execute();
     }
 
+    private void resetCounters() {
+        poisonCount = 0;
+        burnCount = 0;
+        sleepCount = 0;
+        paralyzeCount = 0;
+        confuseCount = 0;
+    }
+
     private class UpdateDB extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -111,16 +141,18 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected Void doInBackground(String... arg) {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair(POISON, "1"));
-            params.add(new BasicNameValuePair(BURN, "2"));
-            params.add(new BasicNameValuePair(SLEEP, "3"));
-            params.add(new BasicNameValuePair(PARALYZE, "4"));
-            params.add(new BasicNameValuePair(CONFUSE, "5"));
+            params.add(new BasicNameValuePair(POISON, Integer.toString(poisonCount)));
+            params.add(new BasicNameValuePair(BURN, Integer.toString(burnCount)));
+            params.add(new BasicNameValuePair(SLEEP, Integer.toString(sleepCount)));
+            params.add(new BasicNameValuePair(PARALYZE, Integer.toString(paralyzeCount)));
+            params.add(new BasicNameValuePair(CONFUSE, Integer.toString(confuseCount)));
 
             ServiceHandler serviceClient = new ServiceHandler();
 
             String json = serviceClient.makeServiceCall(URL_NEW_PREDICTION,
                     ServiceHandler.POST, params);
+
+            resetCounters();
 
             Log.d("DB", "Sent update request.");
 
@@ -143,6 +175,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (Asleep.toggle()) {
             button.setImageDrawable(getResources().getDrawable(R.drawable.asleep_on, getTheme()));
+            sleepCount++;
             //((Animatable) face).start();
         } else {
             button.setImageDrawable(getResources().getDrawable(R.drawable.asleep_off, getTheme()));
@@ -155,6 +188,7 @@ public class MainActivity extends ActionBarActivity {
         ImageButton button = (ImageButton) view;
 
         if (Poisoned.toggle()) {
+            poisonCount++;
             button.setImageDrawable(getResources().getDrawable(R.drawable.poisoned_on, getTheme()));
         } else {
             button.setImageDrawable(getResources().getDrawable(R.drawable.poisoned_off, getTheme()));
@@ -168,6 +202,7 @@ public class MainActivity extends ActionBarActivity {
         LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
 
         if (Paralyzed.toggle()) {
+            paralyzeCount++;
             pic.setLevel(1);
             //Asleep.off(); // this isn't going to be pretty without checkable buttons
         } else {
@@ -181,6 +216,7 @@ public class MainActivity extends ActionBarActivity {
         ImageButton button = (ImageButton) view;
 
         if (Burned.toggle()) {
+            burnCount++;
             button.setImageDrawable(getResources().getDrawable(R.drawable.burned_on, getTheme()));
             //Asleep.off(); // this isn't going to be pretty without checkable buttons
         } else {
@@ -194,6 +230,7 @@ public class MainActivity extends ActionBarActivity {
         ImageButton button = (ImageButton) view;
 
         if (Confused.toggle()) {
+            confuseCount++;
             button.setImageDrawable(getResources().getDrawable(R.drawable.confused_on, getTheme()));
             //Asleep.off(); // this isn't going to be pretty without checkable buttons
         } else {
