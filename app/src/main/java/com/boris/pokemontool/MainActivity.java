@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.drawable.LevelListDrawable;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -112,35 +113,36 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private Toggle Asleep = new Toggle(false);
-
     public void clickAsleep(View view) {
         //ImageButton button = (ImageButton)findViewById(R.id.buttonAsleep);
-        ImageButton button = (ImageButton) view;
         //Drawable background = button.getBackground();
         //Drawable face = button.getDrawable();
+        ImageButton button = (ImageButton) view;
+        LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
 
         if (Asleep.toggle()) {
-            button.setImageDrawable(getResources().getDrawable(R.drawable.asleep_on, getTheme()));
-            //((Animatable) face).start();
+            pic.setLevel(1);
+            //button.setImageDrawable(getResources().getDrawable(R.drawable.asleep_on, getTheme()));
         } else {
-            button.setImageDrawable(getResources().getDrawable(R.drawable.asleep_off, getTheme()));
+            pic.setLevel(0);
+            //button.setImageDrawable(getResources().getDrawable(R.drawable.asleep_off, getTheme()));
         }
     }
 
-    private Toggle Poisoned = new Toggle(false);
-
-    public void clickPoisoned(View view) {
+    private Toggle Confused = new Toggle(false);
+    public void clickConfused(View view) {
         ImageButton button = (ImageButton) view;
+        LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
 
-        if (Poisoned.toggle()) {
-            button.setImageDrawable(getResources().getDrawable(R.drawable.poisoned_on, getTheme()));
+        if (Confused.toggle()) {
+            pic.setLevel(1);
+            //Asleep.off(); // this isn't going to be pretty without checkable buttons
         } else {
-            button.setImageDrawable(getResources().getDrawable(R.drawable.poisoned_off, getTheme()));
+            pic.setLevel(0);
         }
     }
 
     private Toggle Paralyzed = new Toggle(false);
-
     public void clickParalyzed(View view) {
         ImageButton button = (ImageButton) view;
         LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
@@ -154,36 +156,56 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private Toggle Burned = new Toggle(false);
-
     public void clickBurned(View view) {
         ImageButton button = (ImageButton) view;
+        LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
 
         if (Burned.toggle()) {
-            button.setImageDrawable(getResources().getDrawable(R.drawable.burned_on, getTheme()));
-            //Asleep.off(); // this isn't going to be pretty without checkable buttons
+            pic.setLevel(1);
         } else {
-            button.setImageDrawable(getResources().getDrawable(R.drawable.burned_off, getTheme()));
+            pic.setLevel(0);
         }
     }
 
-    private Toggle Confused = new Toggle(false);
-
-    public void clickConfused(View view) {
+    private Toggle Poisoned = new Toggle(false);
+    public void clickPoisoned(View view) {
         ImageButton button = (ImageButton) view;
+        LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
 
-        if (Confused.toggle()) {
-            button.setImageDrawable(getResources().getDrawable(R.drawable.confused_on, getTheme()));
-            //Asleep.off(); // this isn't going to be pretty without checkable buttons
+        if (Poisoned.toggle()) {
+            pic.setLevel(1);
         } else {
-            button.setImageDrawable(getResources().getDrawable(R.drawable.confused_off, getTheme()));
+            pic.setLevel(0);
         }
     }
+
+    private Die Coin = new Die(2);
 
     public void clickCoin(View view){
+        long flipDuration;
+        long dropDelay;
+        flipDuration = 1000;
+        dropDelay = flipDuration - (long)((float)flipDuration * 0.12);
+        ImageButton button = (ImageButton) view;
+        final LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
 
-        ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.flip);
+        ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.toss);
         anim.setTarget(view);
-        anim.setDuration(1000);
+        anim.setDuration(flipDuration);
+
+        // delay image change until the animation is (almost) complete
+        // otherwise it looks as if the coin drops before it flips
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                pic.setLevel(Coin.roll());
+            }
+        }, dropDelay);
+
         anim.start();
+        //pic.setLevel(Coin.roll());
+
     }
 }

@@ -13,8 +13,6 @@
     <path
         android:name="bottom_band_aid"
         android:fillColor="#FFFFFF"
-        android:strokeColor="#FFFFFF"
-        android:strokeWidth="1"
         android:pathData="M73.17,35c2.344,2.344,2.344,6.143,0,8.485L43.472,73.184
 		c-2.343,2.344-6.142,2.344-8.485,0l-7.777-7.777c-2.344-2.344-2.344-6.143,0-8.486l29.697-29.697c2.344-2.343,6.143-2.343,8.486,0
 		L73.17,35z"/>
