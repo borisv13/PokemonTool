@@ -167,7 +167,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private Toggle Asleep = new Toggle(false);
-
     public void clickAsleep(View view) {
         ImageButton button = (ImageButton) view;
         LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
@@ -200,9 +199,8 @@ public class MainActivity extends ActionBarActivity {
         LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
 
         if (Paralyzed.toggle()) {
-            paralyzeCount++;
             pic.setLevel(1);
-            //Asleep.off(); // this isn't going to be pretty without checkable buttons
+            paralyzeCount++;
         } else {
             pic.setLevel(0);
         }
