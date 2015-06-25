@@ -13,213 +13,226 @@
         android:padding="0dp"
         android:weightSum="100">
 
-        <RelativeLayout
+        <FrameLayout
+            android:id="@+id/opponentFrame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="50"
-            android:id="@+id/opponentLayout"
-            android:rotation="180"
-            android:padding="0dp"
-            android:gravity="center_horizontal"
-            android:background="#303030">
+            android:background="#303030"
+            android:rotation="180">
 
-            <ImageButton
-                android:id="@+id/buttonAsleep2"
-                android:layout_alignParentBottom="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:src="@drawable/asleep_leveled"
-                android:cropToPadding="false"
-                android:onClick="clickAsleep"
-                android:elevation="2dp"
-                android:background="@drawable/disk_dark" />
+            <TextView
+                android:id="@+id/textHitPoints2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="250"
+                android:textSize="100sp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:typeface="sans"
+                android:singleLine="true" />
 
-            <ImageButton
-                android:id="@+id/buttonConfused2"
-                android:layout_toRightOf="@id/buttonAsleep2"
-                android:layout_alignParentBottom="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:src="@drawable/confused_leveled"
-                android:cropToPadding="false"
-                android:onClick="clickConfused"
-                android:elevation="2dp"
-                android:background="@drawable/disk_dark" />
+            <RelativeLayout
+                android:id="@+id/opponentButtonsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
 
-            <ImageButton
-                android:id="@+id/buttonParalyzed2"
-                android:layout_toRightOf="@id/buttonConfused2"
-                android:layout_alignParentBottom="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:src="@drawable/paralyzed_leveled"
-                android:cropToPadding="false"
-                android:onClick="clickParalyzed"
-                android:elevation="2dp"
-                android:background="@drawable/disk_dark" />
+                <ImageButton
+                    android:id="@+id/buttonAsleep2"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/asleep_leveled"
+                    android:cropToPadding="false"
+                    android:onClick="clickAsleep"
+                    android:elevation="2dp"
+                    android:background="@drawable/disk_dark" />
 
-            <ImageButton
-                android:id="@+id/buttonBurned2"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_toRightOf="@id/buttonParalyzed2"
-                android:layout_alignParentBottom="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/burned_leveled"
-                android:cropToPadding="false"
-                android:onClick="clickBurned"
-                android:elevation="2dp"
-                android:background="@drawable/disk_dark" />
+                <ImageButton
+                    android:id="@+id/buttonConfused2"
+                    android:layout_toRightOf="@id/buttonAsleep2"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/confused_leveled"
+                    android:cropToPadding="false"
+                    android:onClick="clickConfused"
+                    android:elevation="2dp"
+                    android:background="@drawable/disk_dark" />
 
-            <ImageButton
-                android:id="@+id/buttonPoisoned2"
-                android:layout_toRightOf="@id/buttonBurned2"
-                android:layout_alignParentBottom="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:src="@drawable/poisoned_leveled"
-                android:cropToPadding="false"
-                android:onClick="clickPoisoned"
-                android:elevation="2dp"
-                android:background="@drawable/disk_dark" />
-        </RelativeLayout>
+                <ImageButton
+                    android:id="@+id/buttonParalyzed2"
+                    android:layout_toRightOf="@id/buttonConfused2"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/paralyzed_leveled"
+                    android:cropToPadding="false"
+                    android:onClick="clickParalyzed"
+                    android:elevation="2dp"
+                    android:background="@drawable/disk_dark" />
+
+                <ImageButton
+                    android:id="@+id/buttonBurned2"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_toRightOf="@id/buttonParalyzed2"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/burned_leveled"
+                    android:cropToPadding="false"
+                    android:onClick="clickBurned"
+                    android:elevation="2dp"
+                    android:background="@drawable/disk_dark" />
+
+                <ImageButton
+                    android:id="@+id/buttonPoisoned2"
+                    android:layout_toRightOf="@id/buttonBurned2"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/poisoned_leveled"
+                    android:cropToPadding="false"
+                    android:onClick="clickPoisoned"
+                    android:elevation="2dp"
+                    android:background="@drawable/disk_dark" />
+            </RelativeLayout>
+        </FrameLayout>
 
 
 
-        <RelativeLayout
+        <FrameLayout
+            android:id="@+id/playerFrame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="50"
-            android:id="@+id/playerLayout"
-            android:padding="0dp"
-            android:gravity="center_horizontal"
             android:background="#FFFFFF">
 
+            <TextView
+                android:id="@+id/textHitPoints"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="0"
+                android:textSize="100sp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:typeface="sans"
+                android:singleLine="true" />
 
-            <!--
-                <Button
+            <RelativeLayout
+                android:id="@+id/playerButtonsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <!--
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/player_notes"
+                        android:id="@+id/buttonDatabase"
+                        android:onClick="goToPlayerNotes" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_db"
+                        android:id="@+id/buttonAddDB"
+                        android:onClick="addDB" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/roll_die"
+                        android:id="@+id/buttonDice"
+                        android:onClick="goToRollDie"
+                        android:rotation="180"/>
+                -->
+
+
+                <ImageButton
+                    android:id="@+id/buttonAsleep"
+                    android:layout_alignParentBottom="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/player_notes"
-                    android:id="@+id/buttonDatabase"
-                    android:onClick="goToPlayerNotes" />
+                    android:layout_margin="4dp"
+                    android:src="@drawable/asleep_leveled"
+                    android:cropToPadding="false"
+                    android:onClick="clickAsleep"
+                    android:elevation="2dp"
+                    android:background="@drawable/disk" />
 
-                <Button
+                <!-- background : Non-transparent shape will provide elevation effect (shadow)
+                    Vector drawable, transparent or not, will result in no elevation -->
+
+                <ImageButton
+                    android:id="@+id/buttonConfused"
+                    android:layout_toRightOf="@id/buttonAsleep"
+                    android:layout_alignParentBottom="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_db"
-                    android:id="@+id/buttonAddDB"
-                    android:onClick="addDB" />
+                    android:layout_margin="4dp"
+                    android:src="@drawable/confused_leveled"
+                    android:cropToPadding="false"
+                    android:onClick="clickConfused"
+                    android:elevation="2dp"
+                    android:background="@drawable/disk" />
 
-                <Button
+                <ImageButton
+                    android:id="@+id/buttonParalyzed"
+                    android:layout_toRightOf="@id/buttonConfused"
+                    android:layout_alignParentBottom="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/roll_die"
-                    android:id="@+id/buttonDice"
-                    android:onClick="goToRollDie"
-                    android:rotation="180"/>
-            -->
+                    android:layout_margin="4dp"
+                    android:src="@drawable/paralyzed_leveled"
+                    android:cropToPadding="false"
+                    android:onClick="clickParalyzed"
+                    android:elevation="2dp"
+                    android:background="@drawable/disk" />
 
-            <ImageButton
-                android:id="@+id/buttonAsleep"
-                android:layout_alignParentBottom="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:src="@drawable/asleep_leveled"
-                android:cropToPadding="false"
-                android:onClick="clickAsleep"
-                android:elevation="2dp"
-                android:background="@drawable/disk" />
+                <ImageButton
+                    android:id="@+id/buttonBurned"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_toRightOf="@id/buttonParalyzed"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/burned_leveled"
+                    android:cropToPadding="false"
+                    android:onClick="clickBurned"
+                    android:elevation="2dp"
+                    android:background="@drawable/disk" />
 
-            <!-- background : Non-transparent shape will provide elevation effect (shadow)
-                Vector drawable, transparent or not, will result in no elevation -->
+                <ImageButton
+                    android:id="@+id/buttonPoisoned"
+                    android:layout_toRightOf="@id/buttonBurned"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/poisoned_leveled"
+                    android:cropToPadding="false"
+                    android:onClick="clickPoisoned"
+                    android:elevation="2dp"
+                    android:background="@drawable/disk" />
 
-            <ImageButton
-                android:id="@+id/buttonConfused"
-                android:layout_toRightOf="@id/buttonAsleep"
-                android:layout_alignParentBottom="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:src="@drawable/confused_leveled"
-                android:cropToPadding="false"
-                android:onClick="clickConfused"
-                android:elevation="2dp"
-                android:background="@drawable/disk" />
+            </RelativeLayout>
 
-            <ImageButton
-                android:id="@+id/buttonParalyzed"
-                android:layout_toRightOf="@id/buttonConfused"
-                android:layout_alignParentBottom="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:src="@drawable/paralyzed_leveled"
-                android:cropToPadding="false"
-                android:onClick="clickParalyzed"
-                android:elevation="2dp"
-                android:background="@drawable/disk" />
-
-            <ImageButton
-                android:id="@+id/buttonBurned"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_toRightOf="@id/buttonParalyzed"
-                android:layout_alignParentBottom="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/burned_leveled"
-                android:cropToPadding="false"
-                android:onClick="clickBurned"
-                android:elevation="2dp"
-                android:background="@drawable/disk" />
-
-            <ImageButton
-                android:id="@+id/buttonPoisoned"
-                android:layout_toRightOf="@id/buttonBurned"
-                android:layout_alignParentBottom="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:src="@drawable/poisoned_leveled"
-                android:cropToPadding="false"
-                android:onClick="clickPoisoned"
-                android:elevation="2dp"
-                android:background="@drawable/disk" />
-
-
-            <!--android.support.design.widget.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/fabAsleep"
-                android:src="@drawable/asleep"
-                app:elevation="6dp"
-                app:pressedTranslationZ="12dp"
-                app:borderWidth="0dp"
-                android:onClick="clickAsleep"/-->
-
-            <!--android.support.design.widget.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/fabAsleep2"
-                android:src="@drawable/asleep"
-                app:elevation="6dp"
-                app:pressedTranslationZ="12dp"
-                app:borderWidth="0dp"
-                app:backgroundTint="#ff0000b7"
-                android:onClick="clickAsleep" /-->
-
-        </RelativeLayout>
+        </FrameLayout>
 
     </LinearLayout>
 
