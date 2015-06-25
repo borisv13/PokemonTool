@@ -1,7 +1,11 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Base application theme. parent=Theme.AppCompat.Light.DarkActionBar Theme.AppCompat.NoActionBar--><!-- in .java change extends AppCompatActivity -->
+    <style name="AppTheme" parent="@android:style/Theme.Holo">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTitleSize">0dp</item>
+        <!--item name="android:windowNoTitle">true</item-->
 
     </style>
 

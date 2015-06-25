@@ -2,17 +2,20 @@ package com.boris.pokemontool;
 
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.LevelListDrawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import android.util.Log;
+import android.view.Window;
 import android.widget.ImageButton;
 
 import org.apache.http.NameValuePair;
@@ -24,8 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import android.os.Handler;
 
-
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     private final static int INTERVAL = 1000 * 30 ; //2 minutes
     Handler dbCallHandler = new Handler();
@@ -74,6 +76,8 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_ACTION_BAR);
+        getActionBar().hide();
         setContentView(R.layout.activity_main);
         startRepeatingTask();
     }
