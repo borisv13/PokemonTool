@@ -40,7 +40,7 @@
                 android:layout_height="90dp"
                 android:background="#616161"
                 android:alpha="0.7"
-                android:textColor="#FFFFFF"
+                android:textColor="#FFFFFFFF"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center|left"
                 android:textSize="50dp"
@@ -53,6 +53,7 @@
                 android:layout_height="90dp"
                 android:background="#616161"
                 android:alpha="0.7"
+                android:textColor="#FFFFFFFF"
                 android:layout_marginRight="20dp"
                 android:layout_gravity="center|right"
                 android:textSize="50dp"
@@ -62,7 +63,8 @@
                 android:id="@+id/buttonReset2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
+                android:layout_gravity="center|left"
+                android:layout_marginBottom="75dp"
                 android:layout_marginLeft="25dp"
                 android:src="@drawable/reset"
                 android:alpha="0.9"
@@ -71,6 +73,19 @@
                 android:onClick="clickReset2"
                 android:elevation="0dp"/>
 
+            <ImageButton
+                android:id="@+id/buttonBench2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:layout_marginBottom="75dp"
+                android:layout_marginRight="25dp"
+                android:src="@drawable/bench"
+                android:background="@drawable/disk_bench"
+                android:alpha="0.9"
+                android:cropToPadding="false"
+                android:onClick="clickBench2"
+                android:elevation="0dp"/>
 
             <RelativeLayout
                 android:id="@+id/opponentButtonsLayout"
@@ -196,13 +211,28 @@
                 android:id="@+id/buttonReset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
+                android:layout_gravity="center|left"
+                android:layout_marginBottom="75dp"
                 android:layout_marginLeft="25dp"
                 android:src="@drawable/reset"
                 android:background="@drawable/disk_reset"
                 android:alpha="0.9"
                 android:cropToPadding="false"
                 android:onClick="clickReset"
+                android:elevation="0dp"/>
+
+            <ImageButton
+                android:id="@+id/buttonBench"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:layout_marginBottom="75dp"
+                android:layout_marginRight="25dp"
+                android:src="@drawable/bench"
+                android:background="@drawable/disk_bench"
+                android:alpha="0.9"
+                android:cropToPadding="false"
+                android:onClick="clickBench"
                 android:elevation="0dp"/>
 
             <RelativeLayout
@@ -322,4 +352,16 @@
         android:background="@drawable/coin"
         android:layout_gravity="center"
         android:onClick="clickCoin"/>
+
+    <ImageButton
+        android:id="@+id/buttonOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ellipsis"
+        android:layout_marginRight="5dp"
+        android:elevation="2dp"
+        android:background="@drawable/disk_options"
+        android:layout_gravity="center|right"
+        android:onClick="clickOptions"/>
+
 </FrameLayout>

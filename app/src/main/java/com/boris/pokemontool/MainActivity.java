@@ -361,4 +361,19 @@ public class MainActivity extends Activity {
         playerHP.setTextColor(color);
         playerHP.setText(String.valueOf(defaultHP));
     }
+
+    public void clickOptions(View view){
+        openOptionsMenu();
+    }
+
+    public void clickBench(View view){
+        //Intent intent = new Intent(this, BenchActivity.class);
+        //startActivity(intent);
+    }
+
+    public void clickBench2(View view){
+        //Intent intent = new Intent(this, BenchActivity.class);
+        //startActivity(intent);
+    }
+
 }
