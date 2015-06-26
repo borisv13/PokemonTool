@@ -25,13 +25,52 @@
                 android:id="@+id/textHitPoints2"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:text="250"
-                android:textSize="100sp"
+                android:text="30"
+                android:textSize="100dp"
                 android:textAlignment="center"
                 android:gravity="center"
                 android:textColor="@android:color/white"
                 android:typeface="sans"
                 android:singleLine="true" />
+
+            <Button
+                android:id="@+id/buttonMinus2"
+                android:text="-"
+                android:layout_width="50dp"
+                android:layout_height="90dp"
+                android:background="#616161"
+                android:alpha="0.7"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center|left"
+                android:textSize="50dp"
+                android:onClick="clickMinus2"/>
+
+            <Button
+                android:id="@+id/buttonPlus2"
+                android:text="+"
+                android:layout_width="50dp"
+                android:layout_height="90dp"
+                android:background="#616161"
+                android:alpha="0.7"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="center|right"
+                android:textSize="50dp"
+                android:onClick="clickPlus2"/>
+
+            <ImageButton
+                android:id="@+id/buttonReset2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="37dp"
+                android:layout_marginLeft="27dp"
+                android:src="@drawable/reset"
+                android:alpha="0.9"
+                android:background="@drawable/disk_reset"
+                android:cropToPadding="false"
+                android:onClick="clickReset2"
+                android:elevation="0dp"/>
+
 
             <RelativeLayout
                 android:id="@+id/opponentButtonsLayout"
@@ -121,13 +160,50 @@
                 android:id="@+id/textHitPoints"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:text="0"
-                android:textSize="100sp"
+                android:text="30"
+                android:textSize="100dp"
                 android:textAlignment="center"
                 android:gravity="center"
                 android:textColor="@android:color/black"
                 android:typeface="sans"
                 android:singleLine="true" />
+
+            <Button
+                android:id="@+id/buttonMinus"
+                android:text="-"
+                android:layout_width="50dp"
+                android:layout_height="90dp"
+                android:background="#616161"
+                android:alpha="0.7"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center|left"
+                android:textSize="50dp"
+                android:onClick="clickMinus"/>
+
+            <Button
+                android:id="@+id/buttonPlus"
+                android:text="+"
+                android:layout_width="50dp"
+                android:layout_height="90dp"
+                android:background="#616161"
+                android:alpha="0.7"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="center|right"
+                android:textSize="50dp"
+                android:onClick="clickPlus"/>
+
+            <ImageButton
+                android:id="@+id/buttonReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="37dp"
+                android:layout_marginLeft="27dp"
+                android:src="@drawable/reset"
+                android:background="@drawable/disk_reset"
+                android:alpha="0.9"
+                android:cropToPadding="false"
+                android:onClick="clickReset"
+                android:elevation="0dp"/>
 
             <RelativeLayout
                 android:id="@+id/playerButtonsLayout"
@@ -229,6 +305,7 @@
                     android:onClick="clickPoisoned"
                     android:elevation="2dp"
                     android:background="@drawable/disk" />
+
 
             </RelativeLayout>
 

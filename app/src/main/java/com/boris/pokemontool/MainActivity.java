@@ -4,7 +4,10 @@ import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.LevelListDrawable;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -26,6 +29,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Handler;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -170,6 +174,8 @@ public class MainActivity extends Activity {
         }
     }
 
+
+
     private Toggle Asleep = new Toggle(false);
     public void clickAsleep(View view) {
         ImageButton button = (ImageButton) view;
@@ -264,5 +270,96 @@ public class MainActivity extends Activity {
         anim.start();
         //pic.setLevel(Coin.roll());
 
+    }
+
+    public void clickPlus(View view){
+        int number;
+        int color;
+        TextView playerHP = (TextView) findViewById(R.id.textHitPoints);
+        number = Integer.parseInt(playerHP.getText().toString());
+        number += 10;
+        if (number > 990) {
+            number = 990;
+            color = Color.parseColor("#0c9f50");
+        } else {
+            color = Color.parseColor("#000000");
+        }
+
+        playerHP.setTextColor(color);
+        playerHP.setText(String.valueOf(number));
+    }
+
+    public void clickMinus(View view){
+        int number;
+        int color;
+        TextView playerHP = (TextView) findViewById(R.id.textHitPoints);
+        number = Integer.parseInt(playerHP.getText().toString());
+        number -= 10;
+        if (number <= 0) {
+            number = 0;
+            color = Color.parseColor("#ff0000");
+
+            //Reset ?
+        } else {
+            color = Color.parseColor("#000000");
+        }
+
+        playerHP.setTextColor(color);
+        playerHP.setText(String.valueOf(number));
+    }
+
+
+    public void clickPlus2(View view){
+        int number;
+        int color;
+        TextView playerHP = (TextView) findViewById(R.id.textHitPoints2);
+        number = Integer.parseInt(playerHP.getText().toString());
+        number += 10;
+        if (number > 990) {
+            number = 990;
+            color = Color.parseColor("#0c9f50");
+        } else {
+            color = Color.parseColor("#FFFFFF");
+        }
+
+        playerHP.setTextColor(color);
+        playerHP.setText(String.valueOf(number));
+    }
+
+    public void clickMinus2(View view){
+        int number;
+        int color;
+        TextView playerHP = (TextView) findViewById(R.id.textHitPoints2);
+        number = Integer.parseInt(playerHP.getText().toString());
+        number -= 10;
+        if (number <= 0) {
+            number = 0;
+            color = Color.parseColor("#ff0000");
+
+            //Reset ?
+        } else {
+            color = Color.parseColor("#FFFFFF");
+        }
+
+        playerHP.setTextColor(color);
+        playerHP.setText(String.valueOf(number));
+    }
+
+    public void clickReset(View view){
+        int defaultHP = 30;
+        int color = Color.parseColor("#000000");
+        TextView playerHP = (TextView) findViewById(R.id.textHitPoints);
+
+        playerHP.setTextColor(color);
+        playerHP.setText(String.valueOf(defaultHP));
+    }
+
+    public void clickReset2(View view){
+        int defaultHP = 30;
+        int color = Color.parseColor("#FFFFFF");
+        TextView playerHP = (TextView) findViewById(R.id.textHitPoints2);
+
+        playerHP.setTextColor(color);
+        playerHP.setText(String.valueOf(defaultHP));
     }
 }
