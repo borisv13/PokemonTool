@@ -2,6 +2,7 @@
     <string name="app_name">PokemonTool</string>
 
     <string name="action_settings">Settings</string>
+    <string name="action_player_notes">Player Notes</string>
 
     <string name="player_notes">Player Notes</string>
     <string name="title_activity_player_notes_database">PlayerNotesDatabaseActivity</string>

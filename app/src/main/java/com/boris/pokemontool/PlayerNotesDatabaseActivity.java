@@ -12,12 +12,13 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.app.Activity;
 
 import com.boris.pokemontool.R;
 
 import java.util.List;
 
-public class PlayerNotesDatabaseActivity extends ActionBarActivity {
+public class PlayerNotesDatabaseActivity extends Activity {
 
     public final static String PLAYER_ID_MESSAGE = "com.pokemonutil.pokemontool.PLAYERID";
     public final static String PLAYER_NAME_MESSAGE = "com.pokemonutil.pokemontool.PLAYERNAME";
