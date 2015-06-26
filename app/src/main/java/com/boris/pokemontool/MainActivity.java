@@ -114,11 +114,6 @@ public class MainActivity extends Activity {
     }
 
 
-    public void goToRollDie(View view) {
-        Intent intent = new Intent(this, RollDieActivity.class);
-        startActivity(intent);
-    }
-
     private final String URL_NEW_PREDICTION = "http://10.0.3.2:8080/scripts/update.php";
     private final String POISON = "POISON";
     private final String BURN = "BURN";
@@ -242,7 +237,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    private Die Coin = new Die(2);
+    private Coin coin = new Coin();
 
     public void clickCoin(View view){
         long flipDuration;
@@ -263,7 +258,7 @@ public class MainActivity extends Activity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                pic.setLevel(Coin.roll());
+                pic.setLevel(coin.toss());
             }
         }, dropDelay);
 

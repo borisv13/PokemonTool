@@ -33,14 +33,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.boris.pokemontool.PlayerNotesDatabaseActivity" />
         </activity>
-        <activity
-            android:name=".RollDieActivity"
-            android:label="@string/title_roll_die_activity"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.boris.pokemontool.MainActivity" />
-        </activity>
     </application>
 
 </manifest>
