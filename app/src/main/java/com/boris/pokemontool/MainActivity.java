@@ -101,14 +101,18 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch(id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_player_notes:
+                goToPlayerNotes();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void goToPlayerNotes(View view) {
+    public void goToPlayerNotes() {
         Intent intent = new Intent(this, PlayerNotesDatabaseActivity.class);
         startActivity(intent);
     }
