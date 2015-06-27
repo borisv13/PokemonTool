@@ -241,30 +241,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal">
 
-                <!--
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/player_notes"
-                        android:id="@+id/buttonDatabase"
-                        android:onClick="goToPlayerNotes" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/add_db"
-                        android:id="@+id/buttonAddDB"
-                        android:onClick="addDB" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/roll_die"
-                        android:id="@+id/buttonDice"
-                        android:onClick="goToRollDie"
-                        android:rotation="180"/>
-                -->
-
 
                 <ImageButton
                     android:id="@+id/buttonAsleep"
@@ -363,5 +339,75 @@
         android:background="@drawable/disk_options"
         android:layout_gravity="center|right"
         android:onClick="clickOptions"/>
+
+    <RelativeLayout
+        android:id="@+id/benchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="bottom|center"
+        android:background="#fa7e7e7e"
+        android:gravity="center_horizontal"
+        android:visibility="gone">
+
+        <CheckBox
+            android:id="@+id/benched1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@drawable/pokeball_checkbox_selector"
+            android:button="@null"
+            android:paddingLeft="@null"
+            android:gravity="center"
+            android:text="250"
+            android:layout_alignParentBottom="true"/>
+        <CheckBox
+            android:id="@+id/benched2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@drawable/pokeball_checkbox_selector"
+            android:button="@null"
+            android:paddingLeft="@null"
+            android:gravity="center"
+            android:text="250"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/benched1"/>
+        <CheckBox
+            android:id="@+id/benched3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@drawable/pokeball_checkbox_selector"
+            android:button="@null"
+            android:paddingLeft="@null"
+            android:gravity="center"
+            android:text="250"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/benched2"/>
+        <CheckBox
+            android:id="@+id/benched4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@drawable/pokeball_checkbox_selector"
+            android:button="@null"
+            android:paddingLeft="@null"
+            android:gravity="center"
+            android:text="250"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/benched3"/>
+        <CheckBox
+            android:id="@+id/benched5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@drawable/pokeball_checkbox_selector"
+            android:button="@null"
+            android:paddingLeft="@null"
+            android:gravity="center"
+            android:text="250"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/benched4"/>
+    </RelativeLayout>
 
 </FrameLayout>

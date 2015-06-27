@@ -367,8 +367,11 @@ public class MainActivity extends Activity {
     }
 
     public void clickBench(View view){
-        //Intent intent = new Intent(this, BenchActivity.class);
-        //startActivity(intent);
+        View benchSlider = findViewById(R.id.benchLayout);
+        int visibility;
+
+        visibility = (benchSlider.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE;
+        benchSlider.setVisibility(visibility);
     }
 
     public void clickBench2(View view){

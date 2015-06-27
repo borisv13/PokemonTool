@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:viewportHeight="101"
+    android:viewportWidth="101"
+    android:width="56dp"
+    android:height="56dp">
+    <path
+        android:name="white"
+        android:fillColor="#FFFFFFFF"
+        android:strokeColor="#FF6D6E71"
+        android:strokeWidth="1"
+        android:pathData="M0.5,50.5 a50,50 0 1,0 100,0 a50,50 0 1,0 -100,0 z"/>
+    <path
+        android:name="red"
+        android:fillColor="#ED1C24"
+        android:strokeColor="#ED1C24"
+        android:strokeWidth="1"
+        android:pathData="M33.691,33.558C53.225,14.18,76.637,5.958,85.95,15.244
+		C76.894,6.139,64.357,0.5,50.5,0.5c-27.614,0-50,22.386-50,50c0,13.693,5.509,26.096,14.426,35.126
+		C5.79,76.208,14.192,52.903,33.691,33.558z"/>
+    <path
+        android:name="belt"
+        android:strokeColor="#FF6D6E71"
+        android:strokeWidth="1"
+        android:pathData="M86.04,15.333c-0.016-0.015-0.028-0.033-0.043-0.048
+		c-9.282-9.356-32.74-1.136-52.305,18.272C14.136,52.959,5.736,76.348,15.002,85.711"/>
+    <path
+        android:name="ring"
+        android:fillColor="#FFFFFFFF"
+        android:strokeColor="#FF6D6E71"
+        android:strokeWidth="1"
+        android:pathData="M38.397,20.05 a12.103,12.103 0 1,0 24.206,0 a12.103,12.103 0 1,0 -24.206,0 z"/>
+    <path
+        android:name="button"
+        android:fillColor="#FF000000"
+        android:pathData="M40.685,20.05 a9.815,9.815 0 1,0 19.63,0 a9.815,9.815 0 1,0 -19.63,0 z"/>
+</vector>
