@@ -6,13 +6,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.LevelListDrawable;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -368,15 +364,29 @@ public class MainActivity extends Activity {
 
     public void clickBench(View view){
         View benchSlider = findViewById(R.id.benchLayout);
-        int visibility;
+        View conditionsButtons = findViewById(R.id.playerButtonsLayout);
+        View mainMinusButton = findViewById(R.id.buttonMinus);
+        View mainPlusButton = findViewById(R.id.buttonPlus);
+        View resetButton = findViewById(R.id.buttonReset);
 
-        visibility = (benchSlider.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE;
-        benchSlider.setVisibility(visibility);
+        if (benchSlider.getVisibility() == View.VISIBLE){
+            benchSlider.setVisibility(View.GONE);
+            conditionsButtons.setVisibility(View.VISIBLE);
+            mainMinusButton.setEnabled(true);
+            mainPlusButton.setEnabled(true);
+            resetButton.setEnabled(true);
+        }else {
+            benchSlider.setVisibility(View.VISIBLE);
+            conditionsButtons.setVisibility(View.INVISIBLE); //disable clicks on out-of-focus sp. conditions buttons
+            mainMinusButton.setEnabled(false);
+            mainPlusButton.setEnabled(false);
+            resetButton.setEnabled(false);
+
+        }
     }
 
     public void clickBench2(View view){
-        //Intent intent = new Intent(this, BenchActivity.class);
-        //startActivity(intent);
+
     }
 
 }
