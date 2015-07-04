@@ -3,18 +3,23 @@ package com.boris.pokemontool;
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.LevelListDrawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import android.util.Log;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import org.apache.http.NameValuePair;
@@ -25,6 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Handler;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -78,7 +84,22 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().hide();
+
         setContentView(R.layout.activity_main);
+        LinearLayout field = (LinearLayout) findViewById(R.id.fieldLayout);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT,50f);
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        FrameLayout opponent2 = (FrameLayout) inflater.inflate(R.layout.opponent_layout, null);
+        opponent2.setBackgroundColor(Color.parseColor("#303030"));
+        opponent2.setRotation(180);
+        field.addView(opponent2,params);
+
+        FrameLayout opponent1 = (FrameLayout) inflater.inflate(R.layout.opponent_layout,null);
+        field.addView(opponent1,params);
+
+
+
         startRepeatingTask();
     }
 
@@ -270,7 +291,8 @@ public class MainActivity extends Activity {
     public void clickPlus(View view){
         int number;
         int color;
-        TextView playerHP = (TextView) findViewById(R.id.textHitPoints);
+        View parent = (View) view.getParent();
+        TextView playerHP = (TextView) parent.findViewById(R.id.textHitPoints);
         number = Integer.parseInt(playerHP.getText().toString());
         number += 10;
         if (number > 990) {
@@ -287,7 +309,8 @@ public class MainActivity extends Activity {
     public void clickMinus(View view){
         int number;
         int color;
-        TextView playerHP = (TextView) findViewById(R.id.textHitPoints);
+        View parent = (View) view.getParent();
+        TextView playerHP = (TextView) parent.findViewById(R.id.textHitPoints);
         number = Integer.parseInt(playerHP.getText().toString());
         number -= 10;
         if (number <= 0) {
@@ -303,7 +326,7 @@ public class MainActivity extends Activity {
         playerHP.setText(String.valueOf(number));
     }
 
-
+/*
     public void clickPlus2(View view){
         int number;
         int color;
@@ -339,16 +362,17 @@ public class MainActivity extends Activity {
         playerHP.setTextColor(color);
         playerHP.setText(String.valueOf(number));
     }
-
+*/
     public void clickReset(View view){
         int defaultHP = 30;
         int color = Color.parseColor("#000000");
-        TextView playerHP = (TextView) findViewById(R.id.textHitPoints);
+        View parent = (View) view.getParent();
+        TextView playerHP = (TextView) parent.findViewById(R.id.textHitPoints);
 
         playerHP.setTextColor(color);
         playerHP.setText(String.valueOf(defaultHP));
     }
-
+/*
     public void clickReset2(View view){
         int defaultHP = 30;
         int color = Color.parseColor("#FFFFFF");
@@ -357,17 +381,19 @@ public class MainActivity extends Activity {
         playerHP.setTextColor(color);
         playerHP.setText(String.valueOf(defaultHP));
     }
-
+*/
     public void clickOptions(View view){
         openOptionsMenu();
     }
 
     public void clickBench(View view){
-        View benchSlider = findViewById(R.id.benchLayout);
-        View conditionsButtons = findViewById(R.id.playerButtonsLayout);
-        View mainMinusButton = findViewById(R.id.buttonMinus);
-        View mainPlusButton = findViewById(R.id.buttonPlus);
-        View resetButton = findViewById(R.id.buttonReset);
+        View parent = (View) view.getParent();
+
+        View benchSlider = parent.findViewById(R.id.benchLayout);
+        View conditionsButtons = parent.findViewById(R.id.playerButtonsLayout);
+        View mainMinusButton = parent.findViewById(R.id.buttonMinus);
+        View mainPlusButton = parent.findViewById(R.id.buttonPlus);
+        View resetButton = parent.findViewById(R.id.buttonReset);
 
         if (benchSlider.getVisibility() == View.VISIBLE){
             benchSlider.setVisibility(View.GONE);
@@ -385,8 +411,5 @@ public class MainActivity extends Activity {
         }
     }
 
-    public void clickBench2(View view){
-
-    }
 
 }
