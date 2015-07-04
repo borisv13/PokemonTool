@@ -32,6 +32,7 @@ import java.util.List;
 import android.os.Handler;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
 
@@ -87,16 +88,23 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
         LinearLayout field = (LinearLayout) findViewById(R.id.fieldLayout);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT,50f);
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        FrameLayout opponent2 = (FrameLayout) inflater.inflate(R.layout.opponent_layout, null);
+        FrameLayout opponent2 = (FrameLayout) inflater.inflate(R.layout.opponent_layout, field, false);
         opponent2.setBackgroundColor(Color.parseColor("#303030"));
         opponent2.setRotation(180);
-        field.addView(opponent2,params);
+        ((ToggleButton) opponent2.findViewById(R.id.buttonAsleep)).setBackground(getDrawable(R.drawable.disk_dark));
+        ((ToggleButton) opponent2.findViewById(R.id.buttonConfused)).setBackground(getDrawable(R.drawable.disk_dark));
+        ((ToggleButton) opponent2.findViewById(R.id.buttonParalyzed)).setBackground(getDrawable(R.drawable.disk_dark));
+        ((ToggleButton) opponent2.findViewById(R.id.buttonBurned)).setBackground(getDrawable(R.drawable.disk_dark));
+        ((ToggleButton) opponent2.findViewById(R.id.buttonPoisoned)).setBackground(getDrawable(R.drawable.disk_dark));
+        ((TextView) opponent2.findViewById(R.id.textHitPoints)).setTextColor(Color.WHITE);
+        ((TextView) opponent2.findViewById(R.id.buttonMinus)).setTextColor(Color.WHITE);
+        ((TextView) opponent2.findViewById(R.id.buttonPlus)).setTextColor(Color.WHITE);
+        field.addView(opponent2);
 
-        FrameLayout opponent1 = (FrameLayout) inflater.inflate(R.layout.opponent_layout,null);
-        field.addView(opponent1,params);
+        FrameLayout opponent1 = (FrameLayout) inflater.inflate(R.layout.opponent_layout, field, false);
+        field.addView(opponent1);
 
 
 
@@ -190,71 +198,44 @@ public class MainActivity extends Activity {
         }
     }
 
-
-
-    private Toggle Asleep = new Toggle(false);
     public void clickAsleep(View view) {
-        ImageButton button = (ImageButton) view;
-        LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
-
-        if (Asleep.toggle()) {
-            pic.setLevel(1);
+        View parent = (View) view.getParent();
+        ToggleButton button = (ToggleButton) view;
+        if (button.isChecked()){
             sleepCount++;
-        } else {
-            pic.setLevel(0);
-            //button.setImageDrawable(getResources().getDrawable(R.drawable.asleep_off, getTheme()));
         }
     }
 
-    private Toggle Confused = new Toggle(false);
     public void clickConfused(View view) {
-        ImageButton button = (ImageButton) view;
-        LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
-
-        if (Confused.toggle()) {
-            pic.setLevel(1);
+        View parent = (View) view.getParent();
+        ToggleButton button = (ToggleButton) view;
+        if (button.isChecked()){
             confuseCount++;
-        } else {
-            pic.setLevel(0);
         }
     }
 
-    private Toggle Paralyzed = new Toggle(false);
     public void clickParalyzed(View view) {
-        ImageButton button = (ImageButton) view;
-        LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
-
-        if (Paralyzed.toggle()) {
-            pic.setLevel(1);
+        View parent = (View) view.getParent();
+        ToggleButton button = (ToggleButton) view;
+        if (button.isChecked()){
             paralyzeCount++;
-        } else {
-            pic.setLevel(0);
         }
     }
 
-    private Toggle Burned = new Toggle(false);
     public void clickBurned(View view) {
-        ImageButton button = (ImageButton) view;
-        LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
-
-        if (Burned.toggle()) {
-            pic.setLevel(1);
+        View parent = (View) view.getParent();
+        ToggleButton button = (ToggleButton) view;
+        if (button.isChecked()){
             burnCount++;
-        } else {
-            pic.setLevel(0);
         }
     }
 
     private Toggle Poisoned = new Toggle(false);
     public void clickPoisoned(View view) {
-        ImageButton button = (ImageButton) view;
-        LevelListDrawable pic = (LevelListDrawable) button.getDrawable();
-
-        if (Poisoned.toggle()) {
-            pic.setLevel(1);
+        View parent = (View) view.getParent();
+        ToggleButton button = (ToggleButton) view;
+        if (button.isChecked()){
             poisonCount++;
-        } else {
-            pic.setLevel(0);
         }
     }
 
@@ -299,7 +280,7 @@ public class MainActivity extends Activity {
             number = 990;
             color = Color.parseColor("#0c9f50");
         } else {
-            color = Color.parseColor("#000000");
+            color = ((TextView) view).getCurrentTextColor(); // +/- will have the same text color as the HP counter
         }
 
         playerHP.setTextColor(color);
@@ -309,6 +290,7 @@ public class MainActivity extends Activity {
     public void clickMinus(View view){
         int number;
         int color;
+
         View parent = (View) view.getParent();
         TextView playerHP = (TextView) parent.findViewById(R.id.textHitPoints);
         number = Integer.parseInt(playerHP.getText().toString());
@@ -319,69 +301,25 @@ public class MainActivity extends Activity {
 
             //Reset ?
         } else {
-            color = Color.parseColor("#000000");
+            color = ((TextView) view).getCurrentTextColor(); // +/- will have the same text color as the HP counter
         }
 
         playerHP.setTextColor(color);
         playerHP.setText(String.valueOf(number));
     }
 
-/*
-    public void clickPlus2(View view){
-        int number;
-        int color;
-        TextView playerHP = (TextView) findViewById(R.id.textHitPoints2);
-        number = Integer.parseInt(playerHP.getText().toString());
-        number += 10;
-        if (number > 990) {
-            number = 990;
-            color = Color.parseColor("#0c9f50");
-        } else {
-            color = Color.parseColor("#FFFFFF");
-        }
-
-        playerHP.setTextColor(color);
-        playerHP.setText(String.valueOf(number));
-    }
-
-    public void clickMinus2(View view){
-        int number;
-        int color;
-        TextView playerHP = (TextView) findViewById(R.id.textHitPoints2);
-        number = Integer.parseInt(playerHP.getText().toString());
-        number -= 10;
-        if (number <= 0) {
-            number = 0;
-            color = Color.parseColor("#ff0000");
-
-            //Reset ?
-        } else {
-            color = Color.parseColor("#FFFFFF");
-        }
-
-        playerHP.setTextColor(color);
-        playerHP.setText(String.valueOf(number));
-    }
-*/
     public void clickReset(View view){
         int defaultHP = 30;
-        int color = Color.parseColor("#000000");
+        int color;
+
         View parent = (View) view.getParent();
         TextView playerHP = (TextView) parent.findViewById(R.id.textHitPoints);
+        color = ((TextView) parent.findViewById(R.id.buttonMinus)).getCurrentTextColor(); // +/- will have the same text color as the HP counter
 
         playerHP.setTextColor(color);
         playerHP.setText(String.valueOf(defaultHP));
     }
-/*
-    public void clickReset2(View view){
-        int defaultHP = 30;
-        int color = Color.parseColor("#FFFFFF");
-        TextView playerHP = (TextView) findViewById(R.id.textHitPoints2);
 
-        playerHP.setTextColor(color);
-        playerHP.setText(String.valueOf(defaultHP));
-    }
-*/
     public void clickOptions(View view){
         openOptionsMenu();
     }
@@ -390,7 +328,7 @@ public class MainActivity extends Activity {
         View parent = (View) view.getParent();
 
         View benchSlider = parent.findViewById(R.id.benchLayout);
-        View conditionsButtons = parent.findViewById(R.id.playerButtonsLayout);
+        View conditionsButtons = parent.findViewById(R.id.conditionButtonsLayout);
         View mainMinusButton = parent.findViewById(R.id.buttonMinus);
         View mainPlusButton = parent.findViewById(R.id.buttonPlus);
         View resetButton = parent.findViewById(R.id.buttonReset);
