@@ -8,18 +8,5 @@
         <!--item name="android:windowNoTitle">true</item-->
 
     </style>
-<!--
-    <style name="DarkToggleButton" parent="android:style/Widget.Button.Toggle">
-        <item name="android:background">@drawable/disk_dark</item>
-    </style>
 
-    <style name="LightToggleButton" parent="android:style/Widget.Button.Toggle">
-        <item name="android:background">@drawable/disk</item>
-    </style>
-
-    <style name="DarkButtons">
-        <item name="android:buttonStyleToggle">@style/DarkToggleButton</item>
-    </style>
--->
-<!-- buttonStyleToggle-->
 </resources>

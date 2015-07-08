@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
 import android.os.Handler;
 import android.widget.LinearLayout;
@@ -44,6 +45,12 @@ public class MainActivity extends Activity {
     private int sleepCount = 0;
     private int paralyzeCount = 0;
     private int confuseCount = 0;
+
+    private enum CONDITION {ASLEEP, CONFUSED, PARALYZED, BURNED, POISONED}
+
+    private EnumMap<CONDITION, ToggleButton> opponent1Conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
+    private EnumMap<CONDITION, ToggleButton> opponent2Conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
+
 
     Runnable dbCallHandlerTask = new Runnable() {
         @Override
@@ -87,26 +94,30 @@ public class MainActivity extends Activity {
         getActionBar().hide();
 
         setContentView(R.layout.activity_main);
-        LinearLayout field = (LinearLayout) findViewById(R.id.fieldLayout);
+        LinearLayout fieldView = (LinearLayout) findViewById(R.id.fieldLayout);
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        FrameLayout opponent2 = (FrameLayout) inflater.inflate(R.layout.opponent_layout, field, false);
-        opponent2.setBackgroundColor(Color.parseColor("#303030"));
-        opponent2.setRotation(180);
-        ((ToggleButton) opponent2.findViewById(R.id.buttonAsleep)).setBackground(getDrawable(R.drawable.disk_dark));
-        ((ToggleButton) opponent2.findViewById(R.id.buttonConfused)).setBackground(getDrawable(R.drawable.disk_dark));
-        ((ToggleButton) opponent2.findViewById(R.id.buttonParalyzed)).setBackground(getDrawable(R.drawable.disk_dark));
-        ((ToggleButton) opponent2.findViewById(R.id.buttonBurned)).setBackground(getDrawable(R.drawable.disk_dark));
-        ((ToggleButton) opponent2.findViewById(R.id.buttonPoisoned)).setBackground(getDrawable(R.drawable.disk_dark));
-        ((TextView) opponent2.findViewById(R.id.textHitPoints)).setTextColor(Color.WHITE);
-        ((TextView) opponent2.findViewById(R.id.buttonMinus)).setTextColor(Color.WHITE);
-        ((TextView) opponent2.findViewById(R.id.buttonPlus)).setTextColor(Color.WHITE);
-        field.addView(opponent2);
+        View opponentView = inflater.inflate(R.layout.opponent_layout, fieldView, false);
+        opponentView.setId(R.id.opponent2);
+        opponent2Conditions = setOpponentConditions(opponentView);
 
-        FrameLayout opponent1 = (FrameLayout) inflater.inflate(R.layout.opponent_layout, field, false);
-        field.addView(opponent1);
+        //customize top opponent's fieldView appearance == dark condition buttons, white HP text
+        opponentView.setBackgroundColor(Color.parseColor("#303030"));
+        opponentView.setRotation(180);
 
+        for(EnumMap.Entry<CONDITION, ToggleButton> condition : opponent2Conditions.entrySet())
+            condition.getValue().setBackground(getDrawable(R.drawable.disk_dark));
 
+        ((TextView) opponentView.findViewById(R.id.textHitPoints)).setTextColor(Color.WHITE);
+        ((TextView) opponentView.findViewById(R.id.buttonMinus)).setTextColor(Color.WHITE);
+        ((TextView) opponentView.findViewById(R.id.buttonPlus)).setTextColor(Color.WHITE);
+        //appearance customized
+        fieldView.addView(opponentView);
+
+        opponentView = inflater.inflate(R.layout.opponent_layout, fieldView, false);
+        opponentView.setId(R.id.opponent1);
+        opponent1Conditions = setOpponentConditions(opponentView);
+        fieldView.addView(opponentView);
 
         startRepeatingTask();
     }
@@ -198,41 +209,71 @@ public class MainActivity extends Activity {
         }
     }
 
+    public EnumMap<CONDITION, ToggleButton> setOpponentConditions(View view){
+
+        EnumMap<CONDITION, ToggleButton> conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
+
+        conditions.put(CONDITION.ASLEEP, (ToggleButton) view.findViewById(R.id.buttonAsleep));
+        conditions.put(CONDITION.CONFUSED, (ToggleButton)view.findViewById(R.id.buttonConfused));
+        conditions.put(CONDITION.PARALYZED, (ToggleButton)view.findViewById(R.id.buttonParalyzed));
+        conditions.put(CONDITION.BURNED, (ToggleButton)view.findViewById(R.id.buttonBurned));
+        conditions.put(CONDITION.POISONED, (ToggleButton)view.findViewById(R.id.buttonPoisoned));
+        return conditions;
+    }
+
     public void clickAsleep(View view) {
-        View parent = (View) view.getParent();
+        View grandpa = (View) view.getParent().getParent();
         ToggleButton button = (ToggleButton) view;
         if (button.isChecked()){
             sleepCount++;
+            if(grandpa.getId() == R.id.opponent1){
+                opponent1Conditions.get(CONDITION.CONFUSED).setChecked(false);
+                opponent1Conditions.get(CONDITION.PARALYZED).setChecked(false);
+            } else {
+                opponent2Conditions.get(CONDITION.CONFUSED).setChecked(false);
+                opponent2Conditions.get(CONDITION.PARALYZED).setChecked(false);
+            }
         }
     }
 
     public void clickConfused(View view) {
-        View parent = (View) view.getParent();
+        View grandpa = (View) view.getParent().getParent();
         ToggleButton button = (ToggleButton) view;
         if (button.isChecked()){
             confuseCount++;
+            if(grandpa.getId() == R.id.opponent1){
+                opponent1Conditions.get(CONDITION.ASLEEP).setChecked(false);
+                opponent1Conditions.get(CONDITION.PARALYZED).setChecked(false);
+            } else {
+                opponent2Conditions.get(CONDITION.ASLEEP).setChecked(false);
+                opponent2Conditions.get(CONDITION.PARALYZED).setChecked(false);
+            }
         }
     }
 
     public void clickParalyzed(View view) {
-        View parent = (View) view.getParent();
+        View grandpa = (View) view.getParent().getParent();
         ToggleButton button = (ToggleButton) view;
         if (button.isChecked()){
             paralyzeCount++;
+            if(grandpa.getId() == R.id.opponent1){
+                opponent1Conditions.get(CONDITION.ASLEEP).setChecked(false);
+                opponent1Conditions.get(CONDITION.CONFUSED).setChecked(false);
+            } else {
+                opponent2Conditions.get(CONDITION.ASLEEP).setChecked(false);
+                opponent2Conditions.get(CONDITION.CONFUSED).setChecked(false);
+            }
         }
     }
 
     public void clickBurned(View view) {
-        View parent = (View) view.getParent();
         ToggleButton button = (ToggleButton) view;
         if (button.isChecked()){
             burnCount++;
         }
     }
 
-    private Toggle Poisoned = new Toggle(false);
     public void clickPoisoned(View view) {
-        View parent = (View) view.getParent();
         ToggleButton button = (ToggleButton) view;
         if (button.isChecked()){
             poisonCount++;
@@ -312,13 +353,23 @@ public class MainActivity extends Activity {
         int defaultHP = 30;
         int color;
 
-        View parent = (View) view.getParent();
-        TextView playerHP = (TextView) parent.findViewById(R.id.textHitPoints);
-        color = ((TextView) parent.findViewById(R.id.buttonMinus)).getCurrentTextColor(); // +/- will have the same text color as the HP counter
+        View parent =  (View)view.getParent();
+        TextView playerHP = (TextView)parent.findViewById(R.id.textHitPoints);
+        color = ((TextView)parent.findViewById(R.id.buttonMinus)).getCurrentTextColor(); // +/- will have the same text color as the HP counter
 
         playerHP.setTextColor(color);
         playerHP.setText(String.valueOf(defaultHP));
+
+        if (parent.getId()==R.id.opponent1) {
+            for(EnumMap.Entry<CONDITION, ToggleButton> condition : opponent1Conditions.entrySet())
+                condition.getValue().setChecked(false);
+        } else {
+            for(EnumMap.Entry<CONDITION, ToggleButton> condition : opponent2Conditions.entrySet())
+                condition.getValue().setChecked(false);
+        }
+
     }
+
 
     public void clickOptions(View view){
         openOptionsMenu();
