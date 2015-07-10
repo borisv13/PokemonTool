@@ -3,39 +3,32 @@ package com.boris.pokemontool;
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.LevelListDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import android.util.Log;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.Window;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
-import android.os.Handler;
-import android.widget.LinearLayout;
+
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OpponentFragment.OnFragmentInteractionListener{
 
     private final static int INTERVAL = 1000 * 30 ; //2 minutes
     Handler dbCallHandler = new Handler();
@@ -46,10 +39,19 @@ public class MainActivity extends Activity {
     private int paralyzeCount = 0;
     private int confuseCount = 0;
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+/*
     private enum CONDITION {ASLEEP, CONFUSED, PARALYZED, BURNED, POISONED}
+
 
     private EnumMap<CONDITION, ToggleButton> opponent1Conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
     private EnumMap<CONDITION, ToggleButton> opponent2Conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
+*/
+
 
 
     Runnable dbCallHandlerTask = new Runnable() {
@@ -92,8 +94,18 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().hide();
-
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState == null) {
+            OpponentFragment opponent1 = OpponentFragment.newInstance(false, 30, false, false, false, false, false, 0, 0, 0, 0, 0, false, false, false, false, false, false);
+            OpponentFragment opponent2 = OpponentFragment.newInstance(true, 30, false, false, false, false, false, 0, 0, 0, 0, 0, false, false, false, false, false, false);
+            getFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fieldLayout, opponent2)
+                    .add(R.id.fieldLayout, opponent1)
+                    .commit();
+        }
+/*
         LinearLayout fieldView = (LinearLayout) findViewById(R.id.fieldLayout);
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -118,7 +130,7 @@ public class MainActivity extends Activity {
         opponentView.setId(R.id.opponent1);
         opponent1Conditions = setOpponentConditions(opponentView);
         fieldView.addView(opponentView);
-
+*/
         startRepeatingTask();
     }
 
@@ -209,6 +221,7 @@ public class MainActivity extends Activity {
         }
     }
 
+/*
     public EnumMap<CONDITION, ToggleButton> setOpponentConditions(View view){
 
         EnumMap<CONDITION, ToggleButton> conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
@@ -220,12 +233,14 @@ public class MainActivity extends Activity {
         conditions.put(CONDITION.POISONED, (ToggleButton)view.findViewById(R.id.buttonPoisoned));
         return conditions;
     }
+*/
 
     public void clickAsleep(View view) {
         View grandpa = (View) view.getParent().getParent();
         ToggleButton button = (ToggleButton) view;
         if (button.isChecked()){
             sleepCount++;
+/*
             if(grandpa.getId() == R.id.opponent1){
                 opponent1Conditions.get(CONDITION.CONFUSED).setChecked(false);
                 opponent1Conditions.get(CONDITION.PARALYZED).setChecked(false);
@@ -233,6 +248,7 @@ public class MainActivity extends Activity {
                 opponent2Conditions.get(CONDITION.CONFUSED).setChecked(false);
                 opponent2Conditions.get(CONDITION.PARALYZED).setChecked(false);
             }
+*/
         }
     }
 
@@ -241,6 +257,7 @@ public class MainActivity extends Activity {
         ToggleButton button = (ToggleButton) view;
         if (button.isChecked()){
             confuseCount++;
+/*
             if(grandpa.getId() == R.id.opponent1){
                 opponent1Conditions.get(CONDITION.ASLEEP).setChecked(false);
                 opponent1Conditions.get(CONDITION.PARALYZED).setChecked(false);
@@ -248,6 +265,7 @@ public class MainActivity extends Activity {
                 opponent2Conditions.get(CONDITION.ASLEEP).setChecked(false);
                 opponent2Conditions.get(CONDITION.PARALYZED).setChecked(false);
             }
+*/
         }
     }
 
@@ -256,6 +274,7 @@ public class MainActivity extends Activity {
         ToggleButton button = (ToggleButton) view;
         if (button.isChecked()){
             paralyzeCount++;
+/*
             if(grandpa.getId() == R.id.opponent1){
                 opponent1Conditions.get(CONDITION.ASLEEP).setChecked(false);
                 opponent1Conditions.get(CONDITION.CONFUSED).setChecked(false);
@@ -263,6 +282,7 @@ public class MainActivity extends Activity {
                 opponent2Conditions.get(CONDITION.ASLEEP).setChecked(false);
                 opponent2Conditions.get(CONDITION.CONFUSED).setChecked(false);
             }
+*/
         }
     }
 
@@ -360,6 +380,7 @@ public class MainActivity extends Activity {
         playerHP.setTextColor(color);
         playerHP.setText(String.valueOf(defaultHP));
 
+/*
         if (parent.getId()==R.id.opponent1) {
             for(EnumMap.Entry<CONDITION, ToggleButton> condition : opponent1Conditions.entrySet())
                 condition.getValue().setChecked(false);
@@ -367,6 +388,7 @@ public class MainActivity extends Activity {
             for(EnumMap.Entry<CONDITION, ToggleButton> condition : opponent2Conditions.entrySet())
                 condition.getValue().setChecked(false);
         }
+*/
 
     }
 

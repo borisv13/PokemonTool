@@ -18,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ellipsis"
+        android:elevation="1dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/disk_options"
         android:layout_gravity="center|right"
