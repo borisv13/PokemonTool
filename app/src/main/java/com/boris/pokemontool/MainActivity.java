@@ -28,7 +28,8 @@ import java.util.List;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class MainActivity extends Activity implements OpponentFragment.OnFragmentInteractionListener{
+public class MainActivity extends Activity
+        implements OpponentFragment.OnFragmentInteractionListener{
 
     private final static int INTERVAL = 1000 * 30 ; //2 minutes
     Handler dbCallHandler = new Handler();
@@ -44,14 +45,28 @@ public class MainActivity extends Activity implements OpponentFragment.OnFragmen
 
     }
 
-/*
-    private enum CONDITION {ASLEEP, CONFUSED, PARALYZED, BURNED, POISONED}
-
-
-    private EnumMap<CONDITION, ToggleButton> opponent1Conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
-    private EnumMap<CONDITION, ToggleButton> opponent2Conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
-*/
-
+    @Override
+    public void onSpecialConditionRaised(int condition){
+        switch (condition){
+            case 1:
+                sleepCount++;
+                break;
+            case 2:
+                confuseCount++;
+                break;
+            case 3:
+                paralyzeCount++;
+                break;
+            case 4:
+                burnCount++;
+                break;
+            case 5:
+                poisonCount++;
+                break;
+            default:
+                break;
+        }
+    }
 
 
     Runnable dbCallHandlerTask = new Runnable() {
@@ -105,32 +120,7 @@ public class MainActivity extends Activity implements OpponentFragment.OnFragmen
                     .add(R.id.fieldLayout, opponent1)
                     .commit();
         }
-/*
-        LinearLayout fieldView = (LinearLayout) findViewById(R.id.fieldLayout);
 
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View opponentView = inflater.inflate(R.layout.opponent_layout, fieldView, false);
-        opponentView.setId(R.id.opponent2);
-        opponent2Conditions = setOpponentConditions(opponentView);
-
-        //customize top opponent's fieldView appearance == dark condition buttons, white HP text
-        opponentView.setBackgroundColor(Color.parseColor("#303030"));
-        opponentView.setRotation(180);
-
-        for(EnumMap.Entry<CONDITION, ToggleButton> condition : opponent2Conditions.entrySet())
-            condition.getValue().setBackground(getDrawable(R.drawable.disk_dark));
-
-        ((TextView) opponentView.findViewById(R.id.textHitPoints)).setTextColor(Color.WHITE);
-        ((TextView) opponentView.findViewById(R.id.buttonMinus)).setTextColor(Color.WHITE);
-        ((TextView) opponentView.findViewById(R.id.buttonPlus)).setTextColor(Color.WHITE);
-        //appearance customized
-        fieldView.addView(opponentView);
-
-        opponentView = inflater.inflate(R.layout.opponent_layout, fieldView, false);
-        opponentView.setId(R.id.opponent1);
-        opponent1Conditions = setOpponentConditions(opponentView);
-        fieldView.addView(opponentView);
-*/
         startRepeatingTask();
     }
 
@@ -221,84 +211,6 @@ public class MainActivity extends Activity implements OpponentFragment.OnFragmen
         }
     }
 
-/*
-    public EnumMap<CONDITION, ToggleButton> setOpponentConditions(View view){
-
-        EnumMap<CONDITION, ToggleButton> conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
-
-        conditions.put(CONDITION.ASLEEP, (ToggleButton) view.findViewById(R.id.buttonAsleep));
-        conditions.put(CONDITION.CONFUSED, (ToggleButton)view.findViewById(R.id.buttonConfused));
-        conditions.put(CONDITION.PARALYZED, (ToggleButton)view.findViewById(R.id.buttonParalyzed));
-        conditions.put(CONDITION.BURNED, (ToggleButton)view.findViewById(R.id.buttonBurned));
-        conditions.put(CONDITION.POISONED, (ToggleButton)view.findViewById(R.id.buttonPoisoned));
-        return conditions;
-    }
-*/
-
-    public void clickAsleep(View view) {
-        View grandpa = (View) view.getParent().getParent();
-        ToggleButton button = (ToggleButton) view;
-        if (button.isChecked()){
-            sleepCount++;
-/*
-            if(grandpa.getId() == R.id.opponent1){
-                opponent1Conditions.get(CONDITION.CONFUSED).setChecked(false);
-                opponent1Conditions.get(CONDITION.PARALYZED).setChecked(false);
-            } else {
-                opponent2Conditions.get(CONDITION.CONFUSED).setChecked(false);
-                opponent2Conditions.get(CONDITION.PARALYZED).setChecked(false);
-            }
-*/
-        }
-    }
-
-    public void clickConfused(View view) {
-        View grandpa = (View) view.getParent().getParent();
-        ToggleButton button = (ToggleButton) view;
-        if (button.isChecked()){
-            confuseCount++;
-/*
-            if(grandpa.getId() == R.id.opponent1){
-                opponent1Conditions.get(CONDITION.ASLEEP).setChecked(false);
-                opponent1Conditions.get(CONDITION.PARALYZED).setChecked(false);
-            } else {
-                opponent2Conditions.get(CONDITION.ASLEEP).setChecked(false);
-                opponent2Conditions.get(CONDITION.PARALYZED).setChecked(false);
-            }
-*/
-        }
-    }
-
-    public void clickParalyzed(View view) {
-        View grandpa = (View) view.getParent().getParent();
-        ToggleButton button = (ToggleButton) view;
-        if (button.isChecked()){
-            paralyzeCount++;
-/*
-            if(grandpa.getId() == R.id.opponent1){
-                opponent1Conditions.get(CONDITION.ASLEEP).setChecked(false);
-                opponent1Conditions.get(CONDITION.CONFUSED).setChecked(false);
-            } else {
-                opponent2Conditions.get(CONDITION.ASLEEP).setChecked(false);
-                opponent2Conditions.get(CONDITION.CONFUSED).setChecked(false);
-            }
-*/
-        }
-    }
-
-    public void clickBurned(View view) {
-        ToggleButton button = (ToggleButton) view;
-        if (button.isChecked()){
-            burnCount++;
-        }
-    }
-
-    public void clickPoisoned(View view) {
-        ToggleButton button = (ToggleButton) view;
-        if (button.isChecked()){
-            poisonCount++;
-        }
-    }
 
     private Coin coin = new Coin();
 
@@ -328,6 +240,10 @@ public class MainActivity extends Activity implements OpponentFragment.OnFragmen
         anim.start();
         //pic.setLevel(Coin.roll());
 
+    }
+
+    public void clickOptions(View view){
+        openOptionsMenu();
     }
 
     public void clickPlus(View view){
@@ -392,10 +308,6 @@ public class MainActivity extends Activity implements OpponentFragment.OnFragmen
 
     }
 
-
-    public void clickOptions(View view){
-        openOptionsMenu();
-    }
 
     public void clickBench(View view){
         View parent = (View) view.getParent();

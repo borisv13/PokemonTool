@@ -88,7 +88,6 @@
             android:textOn="@null"
             android:textOff="@null"
             android:elevation="2dp"
-            android:onClick="clickAsleep"
             android:layout_alignParentBottom="true"/>
 
         <!-- background : Non-transparent shape will provide elevation effect (shadow)
@@ -104,7 +103,6 @@
             android:textOn="@null"
             android:textOff="@null"
             android:elevation="2dp"
-            android:onClick="clickConfused"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/buttonAsleep"/>
 
@@ -122,26 +120,9 @@
             android:textOn="@null"
             android:textOff="@null"
             android:elevation="2dp"
-            android:onClick="clickParalyzed"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/buttonConfused"/>
 
-
-        <!--ImageButton
-            android:id="@+id/buttonBurned"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_toRightOf="@id/buttonParalyzed"
-            android:layout_alignParentBottom="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/burned_leveled"
-            android:cropToPadding="false"
-            android:onClick="clickBurned"
-            android:elevation="2dp"
-            android:background="@drawable/disk" /-->
 
         <ToggleButton
             android:id="@+id/buttonBurned"
@@ -153,7 +134,6 @@
             android:textOn="@null"
             android:textOff="@null"
             android:elevation="2dp"
-            android:onClick="clickBurned"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/buttonParalyzed"/>
 
@@ -168,7 +148,6 @@
             android:textOn="@null"
             android:textOff="@null"
             android:elevation="2dp"
-            android:onClick="clickPoisoned"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/buttonBurned"/>
 

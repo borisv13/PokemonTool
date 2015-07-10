@@ -8,6 +8,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -22,9 +23,8 @@ import java.util.EnumMap;
  * Use the {@link OpponentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OpponentFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class OpponentFragment extends Fragment implements View.OnClickListener {
+
     private static final String ARG_TYPE_DARK = "isDark";
     private static final String ARG_HP_ACTIVE = "hpActive";
     private static final String ARG_ASLEEP = "isAsleep";
@@ -45,7 +45,6 @@ public class OpponentFragment extends Fragment {
     private static final String ARG_CHK_BENCHED5 = "isCheckedBenched5";
 
 
-    // TODO: Rename and change types of parameters
     private Boolean mIsDark;
     private int mHpActive;
     private Boolean mIsAsleep;
@@ -65,14 +64,27 @@ public class OpponentFragment extends Fragment {
     private Boolean mIsCheckedBenched4;
     private Boolean mIsCheckedBenched5;
 
+
     private OnFragmentInteractionListener mListener;
+
+
+    private enum CONDITION {ASLEEP, CONFUSED, PARALYZED, BURNED, POISONED}
+    private EnumMap<CONDITION, ToggleButton> conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param isDark Parameter 1.
-     * @param hpActive Parameter 2.
+     * @param isDark determines fragment appearance; if true == black upside-down fragment
+     * @param hpActive active Pokemon health point counter, large numbers
+     * @param isAsleep state of the Asleep special condition button
+     *        ...
+     * @param isPoisoned state of the Poisoned special condition button
+     * @param hpBenched1 health point counter of the first benched Pokemon
+     *        ...
+     * @param hpBenched5 health point counter of the fifth benched Pokemon
+     * @param isBenchVisible Bench panel visible/hidden
+     *
      * @return A new instance of fragment OpponentFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -104,8 +116,6 @@ public class OpponentFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-    private enum CONDITION {ASLEEP, CONFUSED, PARALYZED, BURNED, POISONED}
 
     public OpponentFragment() {
         // Required empty public constructor
@@ -143,9 +153,6 @@ public class OpponentFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_opponent, container, false);
 
-
-        EnumMap<CONDITION, ToggleButton> conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
-
         conditions.put(CONDITION.ASLEEP, (ToggleButton) v.findViewById(R.id.buttonAsleep));
         conditions.put(CONDITION.CONFUSED, (ToggleButton)v.findViewById(R.id.buttonConfused));
         conditions.put(CONDITION.PARALYZED, (ToggleButton)v.findViewById(R.id.buttonParalyzed));
@@ -165,6 +172,9 @@ public class OpponentFragment extends Fragment {
             ((TextView) v.findViewById(R.id.buttonPlus)).setTextColor(Color.WHITE);
             //appearance customized
         }
+
+        for(EnumMap.Entry<CONDITION, ToggleButton> condition : conditions.entrySet())
+            condition.getValue().setOnClickListener(this);
 
         return v;
     }
@@ -206,6 +216,62 @@ public class OpponentFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+        public void onSpecialConditionRaised(int condition);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.buttonAsleep:
+                if (((ToggleButton) v).isChecked()){
+                    if (mListener != null) {
+                        mListener.onSpecialConditionRaised(1);
+                    }
+                    conditions.get(CONDITION.CONFUSED).setChecked(false);
+                    conditions.get(CONDITION.PARALYZED).setChecked(false);
+                }
+                break;
+
+            case R.id.buttonConfused:
+                if (((ToggleButton) v).isChecked()){
+                    if (mListener != null) {
+                        mListener.onSpecialConditionRaised(2);
+                    }
+                    conditions.get(CONDITION.ASLEEP).setChecked(false);
+                    conditions.get(CONDITION.PARALYZED).setChecked(false);
+                }
+                break;
+
+            case R.id.buttonParalyzed:
+                if (((ToggleButton) v).isChecked()){
+                    if (mListener != null) {
+                        mListener.onSpecialConditionRaised(3);
+                    }
+                    conditions.get(CONDITION.ASLEEP).setChecked(false);
+                    conditions.get(CONDITION.CONFUSED).setChecked(false);
+                }
+                break;
+
+            case R.id.buttonBurned:
+                if (((ToggleButton) v).isChecked()){
+                    if (mListener != null) {
+                        mListener.onSpecialConditionRaised(4);
+                    }
+                }
+                break;
+
+            case R.id.buttonPoisoned:
+                if (((ToggleButton) v).isChecked()){
+                    if (mListener != null) {
+                        mListener.onSpecialConditionRaised(5);
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
+
     }
 
 }
