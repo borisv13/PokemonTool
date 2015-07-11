@@ -42,25 +42,27 @@ public class MainActivity extends Activity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+        // default empty placeholder to communicate with OpponentFragment
 
     }
 
     @Override
-    public void onSpecialConditionRaised(int condition){
+    public void onSpecialConditionRaised(CONDITION condition){
+        // pass data from OpponentFragment
         switch (condition){
-            case 1:
+            case ASLEEP:
                 sleepCount++;
                 break;
-            case 2:
+            case CONFUSED:
                 confuseCount++;
                 break;
-            case 3:
+            case PARALYZED:
                 paralyzeCount++;
                 break;
-            case 4:
+            case BURNED:
                 burnCount++;
                 break;
-            case 5:
+            case POISONED:
                 poisonCount++;
                 break;
             default:
@@ -245,94 +247,5 @@ public class MainActivity extends Activity
     public void clickOptions(View view){
         openOptionsMenu();
     }
-
-    public void clickPlus(View view){
-        int number;
-        int color;
-        View parent = (View) view.getParent();
-        TextView playerHP = (TextView) parent.findViewById(R.id.textHitPoints);
-        number = Integer.parseInt(playerHP.getText().toString());
-        number += 10;
-        if (number > 990) {
-            number = 990;
-            color = Color.parseColor("#0c9f50");
-        } else {
-            color = ((TextView) view).getCurrentTextColor(); // +/- will have the same text color as the HP counter
-        }
-
-        playerHP.setTextColor(color);
-        playerHP.setText(String.valueOf(number));
-    }
-
-    public void clickMinus(View view){
-        int number;
-        int color;
-
-        View parent = (View) view.getParent();
-        TextView playerHP = (TextView) parent.findViewById(R.id.textHitPoints);
-        number = Integer.parseInt(playerHP.getText().toString());
-        number -= 10;
-        if (number <= 0) {
-            number = 0;
-            color = Color.parseColor("#ff0000");
-
-            //Reset ?
-        } else {
-            color = ((TextView) view).getCurrentTextColor(); // +/- will have the same text color as the HP counter
-        }
-
-        playerHP.setTextColor(color);
-        playerHP.setText(String.valueOf(number));
-    }
-
-    public void clickReset(View view){
-        int defaultHP = 30;
-        int color;
-
-        View parent =  (View)view.getParent();
-        TextView playerHP = (TextView)parent.findViewById(R.id.textHitPoints);
-        color = ((TextView)parent.findViewById(R.id.buttonMinus)).getCurrentTextColor(); // +/- will have the same text color as the HP counter
-
-        playerHP.setTextColor(color);
-        playerHP.setText(String.valueOf(defaultHP));
-
-/*
-        if (parent.getId()==R.id.opponent1) {
-            for(EnumMap.Entry<CONDITION, ToggleButton> condition : opponent1Conditions.entrySet())
-                condition.getValue().setChecked(false);
-        } else {
-            for(EnumMap.Entry<CONDITION, ToggleButton> condition : opponent2Conditions.entrySet())
-                condition.getValue().setChecked(false);
-        }
-*/
-
-    }
-
-
-    public void clickBench(View view){
-        View parent = (View) view.getParent();
-
-        View benchSlider = parent.findViewById(R.id.benchLayout);
-        View conditionsButtons = parent.findViewById(R.id.conditionButtonsLayout);
-        View mainMinusButton = parent.findViewById(R.id.buttonMinus);
-        View mainPlusButton = parent.findViewById(R.id.buttonPlus);
-        View resetButton = parent.findViewById(R.id.buttonReset);
-
-        if (benchSlider.getVisibility() == View.VISIBLE){
-            benchSlider.setVisibility(View.GONE);
-            conditionsButtons.setVisibility(View.VISIBLE);
-            mainMinusButton.setEnabled(true);
-            mainPlusButton.setEnabled(true);
-            resetButton.setEnabled(true);
-        }else {
-            benchSlider.setVisibility(View.VISIBLE);
-            conditionsButtons.setVisibility(View.INVISIBLE); //disable clicks on out-of-focus sp. conditions buttons
-            mainMinusButton.setEnabled(false);
-            mainPlusButton.setEnabled(false);
-            resetButton.setEnabled(false);
-
-        }
-    }
-
 
 }

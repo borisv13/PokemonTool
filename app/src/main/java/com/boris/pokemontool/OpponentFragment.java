@@ -8,7 +8,6 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -64,12 +63,18 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
     private Boolean mIsCheckedBenched4;
     private Boolean mIsCheckedBenched5;
 
+    private int mTextColor;
+
 
     private OnFragmentInteractionListener mListener;
 
-
-    private enum CONDITION {ASLEEP, CONFUSED, PARALYZED, BURNED, POISONED}
+    private TextView activeHP;
     private EnumMap<CONDITION, ToggleButton> conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
+    private View benchContainer;
+    private View conditionsContainer;
+    private View mainMinusButton;
+    private View mainPlusButton;
+    private View resetButton;
 
     /**
      * Use this factory method to create a new instance of
@@ -144,6 +149,7 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
             mIsCheckedBenched4 = getArguments().getBoolean(ARG_CHK_BENCHED4);
             mIsCheckedBenched5 = getArguments().getBoolean(ARG_CHK_BENCHED5);
 
+            mTextColor = (mIsDark) ? Color.WHITE : Color.BLACK;
         }
     }
 
@@ -153,11 +159,31 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_opponent, container, false);
 
-        conditions.put(CONDITION.ASLEEP, (ToggleButton) v.findViewById(R.id.buttonAsleep));
-        conditions.put(CONDITION.CONFUSED, (ToggleButton)v.findViewById(R.id.buttonConfused));
-        conditions.put(CONDITION.PARALYZED, (ToggleButton)v.findViewById(R.id.buttonParalyzed));
-        conditions.put(CONDITION.BURNED, (ToggleButton)v.findViewById(R.id.buttonBurned));
-        conditions.put(CONDITION.POISONED, (ToggleButton)v.findViewById(R.id.buttonPoisoned));
+        activeHP = (TextView) v.findViewById(R.id.textHitPoints);
+        activeHP.setText(String.valueOf(mHpActive));
+        mainMinusButton = v.findViewById(R.id.buttonMinus);
+        mainPlusButton = v.findViewById(R.id.buttonPlus);
+        resetButton = v.findViewById(R.id.buttonReset);
+
+        conditionsContainer = v.findViewById(R.id.conditionButtonsLayout);
+
+        conditions.put(CONDITION.ASLEEP, (ToggleButton) conditionsContainer.findViewById(R.id.buttonAsleep));
+        conditions.put(CONDITION.CONFUSED, (ToggleButton) conditionsContainer.findViewById(R.id.buttonConfused));
+        conditions.put(CONDITION.PARALYZED, (ToggleButton) conditionsContainer.findViewById(R.id.buttonParalyzed));
+        conditions.put(CONDITION.BURNED, (ToggleButton) conditionsContainer.findViewById(R.id.buttonBurned));
+        conditions.put(CONDITION.POISONED, (ToggleButton) conditionsContainer.findViewById(R.id.buttonPoisoned));
+
+        conditions.get(CONDITION.ASLEEP).setChecked(mIsAsleep);
+        conditions.get(CONDITION.CONFUSED).setChecked(mIsConfused);
+        conditions.get(CONDITION.PARALYZED).setChecked(mIsParalyzed);
+        conditions.get(CONDITION.BURNED).setChecked(mIsBurned);
+        conditions.get(CONDITION.POISONED).setChecked(mIsPoisoned);
+
+
+        benchContainer = v.findViewById(R.id.benchLayout);
+        setBenchVisibility(mIsBenchVisible);
+
+
 
         //customize top opponent's fieldView appearance == dark condition buttons, white HP text
         if (mIsDark) {
@@ -167,14 +193,13 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
             for(EnumMap.Entry<CONDITION, ToggleButton> condition : conditions.entrySet())
                 condition.getValue().setBackground(getActivity().getDrawable(R.drawable.disk_dark));
 
-            ((TextView) v.findViewById(R.id.textHitPoints)).setTextColor(Color.WHITE);
-            ((TextView) v.findViewById(R.id.buttonMinus)).setTextColor(Color.WHITE);
-            ((TextView) v.findViewById(R.id.buttonPlus)).setTextColor(Color.WHITE);
+            ((TextView) v.findViewById(R.id.textHitPoints)).setTextColor(mTextColor);
+            ((TextView) v.findViewById(R.id.buttonMinus)).setTextColor(mTextColor);
+            ((TextView) v.findViewById(R.id.buttonPlus)).setTextColor(mTextColor);
             //appearance customized
         }
 
-        for(EnumMap.Entry<CONDITION, ToggleButton> condition : conditions.entrySet())
-            condition.getValue().setOnClickListener(this);
+        setChildrenOnclickListener(v);
 
         return v;
     }
@@ -203,6 +228,21 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        //TODO: Save fragment state; don't forget about the Activity
+        // http://stackoverflow.com/questions/15608709/using-onsaveinstancestate-with-fragments-in-backstack
+        // +pg.32
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putBoolean(ARG_TYPE_DARK, mIsDark);
+        savedInstanceState.putBoolean(ARG_ASLEEP, conditions.get(CONDITION.ASLEEP).isChecked());
+        savedInstanceState.putBoolean(ARG_CONFUSED, conditions.get(CONDITION.CONFUSED).isChecked());
+        savedInstanceState.putBoolean(ARG_PARALYZED, conditions.get(CONDITION.PARALYZED).isChecked());
+        savedInstanceState.putBoolean(ARG_BURNED, conditions.get(CONDITION.BURNED).isChecked());
+        savedInstanceState.putBoolean(ARG_POISONED, conditions.get(CONDITION.POISONED).isChecked());
+        //TODO: continue......
+
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -216,16 +256,39 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
-        public void onSpecialConditionRaised(int condition);
+        public void onSpecialConditionRaised(CONDITION condition);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.buttonPlus:
+                mHpActive = incrementHp(mHpActive, 10, activeHP, mTextColor);
+                break;
+
+            case R.id.buttonMinus:
+                mHpActive = incrementHp(mHpActive, -10, activeHP, mTextColor);
+                break;
+
+            case R.id.buttonReset:
+                mHpActive = 30;
+                activeHP.setText(String.valueOf(mHpActive));
+                activeHP.setTextColor(mTextColor);
+
+                mIsAsleep = mIsConfused = mIsParalyzed = mIsBurned = mIsPoisoned = false;
+                for(EnumMap.Entry<CONDITION, ToggleButton> condition : conditions.entrySet())
+                    condition.getValue().setChecked(false);
+                break;
+
+            case R.id.buttonBench:
+                mIsBenchVisible = setBenchVisibility(!mIsBenchVisible);
+
+                break;
+
             case R.id.buttonAsleep:
                 if (((ToggleButton) v).isChecked()){
                     if (mListener != null) {
-                        mListener.onSpecialConditionRaised(1);
+                        mListener.onSpecialConditionRaised(CONDITION.ASLEEP);
                     }
                     conditions.get(CONDITION.CONFUSED).setChecked(false);
                     conditions.get(CONDITION.PARALYZED).setChecked(false);
@@ -235,7 +298,7 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
             case R.id.buttonConfused:
                 if (((ToggleButton) v).isChecked()){
                     if (mListener != null) {
-                        mListener.onSpecialConditionRaised(2);
+                        mListener.onSpecialConditionRaised(CONDITION.CONFUSED);
                     }
                     conditions.get(CONDITION.ASLEEP).setChecked(false);
                     conditions.get(CONDITION.PARALYZED).setChecked(false);
@@ -245,7 +308,7 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
             case R.id.buttonParalyzed:
                 if (((ToggleButton) v).isChecked()){
                     if (mListener != null) {
-                        mListener.onSpecialConditionRaised(3);
+                        mListener.onSpecialConditionRaised(CONDITION.PARALYZED);
                     }
                     conditions.get(CONDITION.ASLEEP).setChecked(false);
                     conditions.get(CONDITION.CONFUSED).setChecked(false);
@@ -255,7 +318,7 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
             case R.id.buttonBurned:
                 if (((ToggleButton) v).isChecked()){
                     if (mListener != null) {
-                        mListener.onSpecialConditionRaised(4);
+                        mListener.onSpecialConditionRaised(CONDITION.BURNED);
                     }
                 }
                 break;
@@ -263,7 +326,7 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
             case R.id.buttonPoisoned:
                 if (((ToggleButton) v).isChecked()){
                     if (mListener != null) {
-                        mListener.onSpecialConditionRaised(5);
+                        mListener.onSpecialConditionRaised(CONDITION.POISONED);
                     }
                 }
                 break;
@@ -273,5 +336,53 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
         }
 
     }
+
+    private void setChildrenOnclickListener(View parentView){
+        if (parentView instanceof ViewGroup){
+            for (int i = 0; i < ((ViewGroup) parentView).getChildCount(); i++) {
+                View childView = ((ViewGroup) parentView).getChildAt(i);
+                if (childView.isClickable())
+                    childView.setOnClickListener(this);
+                if (childView instanceof ViewGroup)
+                    setChildrenOnclickListener(childView);
+            }
+        }
+    }
+
+    private int incrementHp(int hp, int i, TextView tv, int defaultTextColor){
+        int c = defaultTextColor;
+        int x = hp + i;
+
+        if (x <= 0) {
+            x = 0;
+            c = Color.RED;
+        } else if (x > 990) {
+            x = 990;
+            c = Color.GREEN;
+        }
+        tv.setText(String.valueOf(x));
+        tv.setTextColor(c);
+        return x;
+    }
+
+    private Boolean setBenchVisibility(Boolean isVisible){
+
+        if (isVisible){
+            benchContainer.setVisibility(View.VISIBLE);
+            conditionsContainer.setVisibility(View.INVISIBLE); //disable clicks on out-of-focus sp. conditions buttons
+            mainMinusButton.setEnabled(false);
+            mainPlusButton.setEnabled(false);
+            resetButton.setEnabled(false);
+        } else {
+            benchContainer.setVisibility(View.GONE);
+            conditionsContainer.setVisibility(View.VISIBLE);
+            mainMinusButton.setEnabled(true);
+            mainPlusButton.setEnabled(true);
+            resetButton.setEnabled(true);
+        }
+
+        return (benchContainer.getVisibility() == View.VISIBLE);
+    }
+
 
 }
