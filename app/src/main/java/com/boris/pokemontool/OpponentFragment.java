@@ -77,6 +77,7 @@ public class OpponentFragment extends Fragment
     private View activeMinus;
     private View activePlus;
     private View resetButton;
+    private View benchButton;
     private View conditionsContainer;
     private EnumMap<CONDITION, ToggleButton> conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
     private View benchContainer;
@@ -174,6 +175,7 @@ public class OpponentFragment extends Fragment
         activeMinus = v.findViewById(R.id.buttonMinus);
         activePlus = v.findViewById(R.id.buttonPlus);
         resetButton = v.findViewById(R.id.buttonReset);
+        benchButton = v.findViewById(R.id.buttonBench);
         conditionsContainer = v.findViewById(R.id.conditionButtonsLayout);
         conditions.put(CONDITION.ASLEEP, (ToggleButton) conditionsContainer.findViewById(R.id.buttonAsleep));
         conditions.put(CONDITION.CONFUSED, (ToggleButton) conditionsContainer.findViewById(R.id.buttonConfused));
@@ -351,6 +353,7 @@ public class OpponentFragment extends Fragment
             case R.id.buttonBench:
                 setBenchSwapButtonState();
                 mIsBenchVisible = setBenchVisibility(!mIsBenchVisible);
+                benchButton.setElevation((mIsBenchVisible) ? 6 : 0);
                 if (!mIsBenchVisible){
                     for (int i = 0; i < 5; i++)
                         benched[i].setChecked(false);
