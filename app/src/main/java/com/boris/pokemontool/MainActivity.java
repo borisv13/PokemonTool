@@ -114,8 +114,8 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            OpponentFragment opponent1 = OpponentFragment.newInstance(false, 30, false, false, false, false, false, 0, 0, 0, 0, 0, false, false, false, false, false, false);
-            OpponentFragment opponent2 = OpponentFragment.newInstance(true, 30, false, false, false, false, false, 0, 0, 0, 0, 0, false, false, false, false, false, false);
+            OpponentFragment opponent1 = OpponentFragment.newInstance(false, 0, false, false, false, false, false, 0, 0, 0, 0, 0, false, false, false, false, false, false);
+            OpponentFragment opponent2 = OpponentFragment.newInstance(true, 0, false, false, false, false, false, 0, 0, 0, 0, 0, false, false, false, false, false, false);
             getFragmentManager()
                     .beginTransaction()
                     .add(R.id.fieldLayout, opponent2)
@@ -124,6 +124,12 @@ public class MainActivity extends Activity
         }
 
         startRepeatingTask();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
     }
 
     @Override

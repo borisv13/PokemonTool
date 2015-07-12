@@ -8,6 +8,8 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -22,7 +24,8 @@ import java.util.EnumMap;
  * Use the {@link OpponentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OpponentFragment extends Fragment implements View.OnClickListener {
+public class OpponentFragment extends Fragment
+        implements View.OnClickListener, View.OnLongClickListener {
 
     private static final String ARG_TYPE_DARK = "isDark";
     private static final String ARG_HP_ACTIVE = "hpActive";
@@ -63,18 +66,26 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
     private Boolean mIsCheckedBenched4;
     private Boolean mIsCheckedBenched5;
 
+    private int mHpBenched[] = new int[5];
+
     private int mTextColor;
 
 
     private OnFragmentInteractionListener mListener;
 
     private TextView activeHP;
+    private View activeMinus;
+    private View activePlus;
+    private View resetButton;
+    private View conditionsContainer;
     private EnumMap<CONDITION, ToggleButton> conditions = new EnumMap<CONDITION, ToggleButton>(CONDITION.class);
     private View benchContainer;
-    private View conditionsContainer;
-    private View mainMinusButton;
-    private View mainPlusButton;
-    private View resetButton;
+    private View benchedPlus;
+    private View benchedMinus;
+    private ImageButton benchedRetreat;
+    private CheckBox benched[] = new CheckBox[5];
+
+
 
     /**
      * Use this factory method to create a new instance of
@@ -160,28 +171,32 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_opponent, container, false);
 
         activeHP = (TextView) v.findViewById(R.id.textHitPoints);
-        activeHP.setText(String.valueOf(mHpActive));
-        mainMinusButton = v.findViewById(R.id.buttonMinus);
-        mainPlusButton = v.findViewById(R.id.buttonPlus);
+        activeMinus = v.findViewById(R.id.buttonMinus);
+        activePlus = v.findViewById(R.id.buttonPlus);
         resetButton = v.findViewById(R.id.buttonReset);
-
         conditionsContainer = v.findViewById(R.id.conditionButtonsLayout);
-
         conditions.put(CONDITION.ASLEEP, (ToggleButton) conditionsContainer.findViewById(R.id.buttonAsleep));
         conditions.put(CONDITION.CONFUSED, (ToggleButton) conditionsContainer.findViewById(R.id.buttonConfused));
         conditions.put(CONDITION.PARALYZED, (ToggleButton) conditionsContainer.findViewById(R.id.buttonParalyzed));
         conditions.put(CONDITION.BURNED, (ToggleButton) conditionsContainer.findViewById(R.id.buttonBurned));
         conditions.put(CONDITION.POISONED, (ToggleButton) conditionsContainer.findViewById(R.id.buttonPoisoned));
-
-        conditions.get(CONDITION.ASLEEP).setChecked(mIsAsleep);
-        conditions.get(CONDITION.CONFUSED).setChecked(mIsConfused);
-        conditions.get(CONDITION.PARALYZED).setChecked(mIsParalyzed);
-        conditions.get(CONDITION.BURNED).setChecked(mIsBurned);
-        conditions.get(CONDITION.POISONED).setChecked(mIsPoisoned);
-
-
         benchContainer = v.findViewById(R.id.benchLayout);
-        setBenchVisibility(mIsBenchVisible);
+        benched[0] = (CheckBox) benchContainer.findViewById(R.id.benched1);
+        benched[1] = (CheckBox) benchContainer.findViewById(R.id.benched2);
+        benched[2] = (CheckBox) benchContainer.findViewById(R.id.benched3);
+        benched[3] = (CheckBox) benchContainer.findViewById(R.id.benched4);
+        benched[4] = (CheckBox) benchContainer.findViewById(R.id.benched5);
+        benchedRetreat = (ImageButton) benchContainer.findViewById(R.id.buttonBenchRetreat);
+
+
+
+//        activeHP.setText(String.valueOf(mHpActive));
+//        conditions.get(CONDITION.ASLEEP).setChecked(mIsAsleep);
+//        conditions.get(CONDITION.CONFUSED).setChecked(mIsConfused);
+//        conditions.get(CONDITION.PARALYZED).setChecked(mIsParalyzed);
+//        conditions.get(CONDITION.BURNED).setChecked(mIsBurned);
+//        conditions.get(CONDITION.POISONED).setChecked(mIsPoisoned);
+//        setBenchVisibility(mIsBenchVisible);
 
 
 
@@ -199,7 +214,23 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
             //appearance customized
         }
 
+/*  This may be an eventual enhancement -- change button orientation on screen orientation change
+
+        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            ViewGroup.LayoutParams params = activePlus.getLayoutParams();
+            int w = params.width;
+            params.width = params.height;
+            params.height = w;
+            activePlus.setLayoutParams(params);
+        }
+*/
+
+
         setChildrenOnclickListener(v);
+        activeMinus.setOnLongClickListener(this);
+        activePlus.setOnLongClickListener(this);
+//        benchedMinus.setOnLongClickListener(this);
+//        benchedPlus.setOnLongClickListener(this);
 
         return v;
     }
@@ -234,15 +265,23 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
         // http://stackoverflow.com/questions/15608709/using-onsaveinstancestate-with-fragments-in-backstack
         // +pg.32
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putBoolean(ARG_TYPE_DARK, mIsDark);
+//        savedInstanceState.putBoolean(ARG_TYPE_DARK, mIsDark);
+//        savedInstanceState.putInt(ARG_HP_ACTIVE, mHpActive);
+/*
         savedInstanceState.putBoolean(ARG_ASLEEP, conditions.get(CONDITION.ASLEEP).isChecked());
         savedInstanceState.putBoolean(ARG_CONFUSED, conditions.get(CONDITION.CONFUSED).isChecked());
         savedInstanceState.putBoolean(ARG_PARALYZED, conditions.get(CONDITION.PARALYZED).isChecked());
         savedInstanceState.putBoolean(ARG_BURNED, conditions.get(CONDITION.BURNED).isChecked());
         savedInstanceState.putBoolean(ARG_POISONED, conditions.get(CONDITION.POISONED).isChecked());
-        //TODO: continue......
+*/
+//        savedInstanceState.putBoolean(ARG_ASLEEP, mIsAsleep);
+//        savedInstanceState.putBoolean(ARG_CONFUSED, mIsConfused);
+//        savedInstanceState.putBoolean(ARG_PARALYZED, mIsParalyzed);
+//        savedInstanceState.putBoolean(ARG_BURNED, mIsBurned);
+//        savedInstanceState.putBoolean(ARG_POISONED, mIsPoisoned);
 
     }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -260,6 +299,37 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public boolean onLongClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonPlus:
+                mHpActive = incrementHp(mHpActive, 50, activeHP, mTextColor);
+                break;
+
+            case R.id.buttonMinus:
+                mHpActive = incrementHp(mHpActive, -50, activeHP, mTextColor);
+                break;
+
+            case R.id.buttonBenchPlus:
+                for (int i = 0; i < 5; i++){
+                    if (benched[i].isChecked())
+                        mHpBenched[i] = incrementHp(mHpBenched[i], 10, benched[i],Color.BLACK);
+                }
+                setBenchSwapButtonState();
+                break;
+
+            case R.id.buttonBenchMinus:
+                for (int i = 0; i < 5; i++){
+                    if (benched[i].isChecked())
+                        mHpBenched[i] = incrementHp(mHpBenched[i], -10, benched[i],Color.BLACK);
+                }
+                setBenchSwapButtonState();
+                break;
+        }
+
+        return true;
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.buttonPlus:
@@ -271,28 +341,92 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.buttonReset:
-                mHpActive = 30;
+                mHpActive = 0;
                 activeHP.setText(String.valueOf(mHpActive));
-                activeHP.setTextColor(mTextColor);
+                activeHP.setTextColor(Color.GREEN);
 
-                mIsAsleep = mIsConfused = mIsParalyzed = mIsBurned = mIsPoisoned = false;
-                for(EnumMap.Entry<CONDITION, ToggleButton> condition : conditions.entrySet())
-                    condition.getValue().setChecked(false);
+                clearConditions();
                 break;
 
             case R.id.buttonBench:
+                setBenchSwapButtonState();
                 mIsBenchVisible = setBenchVisibility(!mIsBenchVisible);
+                if (!mIsBenchVisible){
+                    for (int i = 0; i < 5; i++)
+                        benched[i].setChecked(false);
+                }
+                break;
 
+            case R.id.buttonBenchPlus:
+                for (int i = 0; i < 5; i++)
+                    if (benched[i].isChecked())
+                        mHpBenched[i] = incrementHp(mHpBenched[i], 10, benched[i],Color.BLACK);
+                setBenchSwapButtonState();
+                break;
+
+            case R.id.buttonBenchMinus:
+                for (int i = 0; i < 5; i++)
+                    if (benched[i].isChecked())
+                        mHpBenched[i] = incrementHp(mHpBenched[i], -10, benched[i],Color.BLACK);
+                setBenchSwapButtonState();
+                break;
+
+            case R.id.buttonBenchRetreat:
+                switch (benchedRetreat.getDrawable().getLevel()){
+                    case 0: // select all
+                        for (int i = 0; i < 5; i++) benched[i].setChecked(true);
+                        break;
+                    case 1: //swap
+                        //find the selected spot on the bench
+                        int i = 0;
+                        while (!benched[i].isChecked()) i++;
+                        //swap active and selected bench damage counters
+                        activeHP.setText(String.valueOf(mHpBenched[i]));
+                        activeHP.setTextColor(mTextColor);
+                        benched[i].setText(String.valueOf(mHpActive));
+                        benched[i].setTextColor(Color.BLACK);
+                        int x = mHpActive;
+                        mHpActive = mHpBenched[i];
+                        mHpBenched[i] = x;
+                        // clear any special conditions
+                        clearConditions();
+                        break;
+                }
+                break;
+
+            case R.id.benched1:
+                setBenchedChecked(0);
+                setBenchSwapButtonState();
+                break;
+            case R.id.benched2:
+                setBenchedChecked(1);
+                setBenchSwapButtonState();
+                break;
+            case R.id.benched3:
+                setBenchedChecked(2);
+                setBenchSwapButtonState();
+                break;
+            case R.id.benched4:
+                setBenchedChecked(3);
+                setBenchSwapButtonState();
+                break;
+            case R.id.benched5:
+                setBenchedChecked(4);
+                setBenchSwapButtonState();
                 break;
 
             case R.id.buttonAsleep:
-                if (((ToggleButton) v).isChecked()){
+                if (((ToggleButton) v).isChecked()) {
                     if (mListener != null) {
                         mListener.onSpecialConditionRaised(CONDITION.ASLEEP);
                     }
                     conditions.get(CONDITION.CONFUSED).setChecked(false);
                     conditions.get(CONDITION.PARALYZED).setChecked(false);
-                }
+
+                    mIsAsleep = true;
+                    mIsConfused = mIsParalyzed = false;
+                } else
+                    mIsAsleep = false;
                 break;
 
             case R.id.buttonConfused:
@@ -302,7 +436,11 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
                     }
                     conditions.get(CONDITION.ASLEEP).setChecked(false);
                     conditions.get(CONDITION.PARALYZED).setChecked(false);
-                }
+
+                    mIsConfused = true;
+                    mIsAsleep = mIsParalyzed = false;
+                } else
+                    mIsConfused = false;
                 break;
 
             case R.id.buttonParalyzed:
@@ -312,7 +450,11 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
                     }
                     conditions.get(CONDITION.ASLEEP).setChecked(false);
                     conditions.get(CONDITION.CONFUSED).setChecked(false);
-                }
+
+                    mIsParalyzed = true;
+                    mIsAsleep = mIsConfused = false;
+                } else
+                    mIsParalyzed = false;
                 break;
 
             case R.id.buttonBurned:
@@ -320,7 +462,9 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
                     if (mListener != null) {
                         mListener.onSpecialConditionRaised(CONDITION.BURNED);
                     }
-                }
+                    mIsBurned = true;
+                } else
+                    mIsBurned = false;
                 break;
 
             case R.id.buttonPoisoned:
@@ -328,13 +472,21 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
                     if (mListener != null) {
                         mListener.onSpecialConditionRaised(CONDITION.POISONED);
                     }
-                }
+                    mIsPoisoned = true;
+                } else
+                    mIsPoisoned = false;
                 break;
 
             default:
                 break;
         }
 
+    }
+
+    private void clearConditions() {
+        mIsAsleep = mIsConfused = mIsParalyzed = mIsBurned = mIsPoisoned = false;
+        for(EnumMap.Entry<CONDITION, ToggleButton> condition : conditions.entrySet())
+            condition.getValue().setChecked(false);
     }
 
     private void setChildrenOnclickListener(View parentView){
@@ -349,19 +501,21 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private int incrementHp(int hp, int i, TextView tv, int defaultTextColor){
-        int c = defaultTextColor;
-        int x = hp + i;
+    private int incrementHp(int damageCounter, int i, TextView tv, int defaultTextColor){
+        int color = defaultTextColor;
+        int x = damageCounter + i;
 
         if (x <= 0) {
             x = 0;
-            c = Color.RED;
+            if (damageCounter == x)
+                color = Color.GREEN;
         } else if (x > 990) {
             x = 990;
-            c = Color.GREEN;
+            if (damageCounter == x)
+                color = Color.RED;
         }
         tv.setText(String.valueOf(x));
-        tv.setTextColor(c);
+        tv.setTextColor(color);
         return x;
     }
 
@@ -370,14 +524,14 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
         if (isVisible){
             benchContainer.setVisibility(View.VISIBLE);
             conditionsContainer.setVisibility(View.INVISIBLE); //disable clicks on out-of-focus sp. conditions buttons
-            mainMinusButton.setEnabled(false);
-            mainPlusButton.setEnabled(false);
+            activeMinus.setEnabled(false);
+            activePlus.setEnabled(false);
             resetButton.setEnabled(false);
         } else {
             benchContainer.setVisibility(View.GONE);
             conditionsContainer.setVisibility(View.VISIBLE);
-            mainMinusButton.setEnabled(true);
-            mainPlusButton.setEnabled(true);
+            activeMinus.setEnabled(true);
+            activePlus.setEnabled(true);
             resetButton.setEnabled(true);
         }
 
@@ -385,4 +539,26 @@ public class OpponentFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    private void setBenchSwapButtonState(){
+        /*
+            Button levels:
+            0 -- disk == select all
+            1 -- double-headed arrow
+
+        */
+        int countChecked = 0;
+
+        for (int i=0; i < 5; i++)
+            if (benched[i].isChecked())
+                countChecked++;
+
+        if (countChecked == 1)
+            benchedRetreat.getDrawable().setLevel(1);
+        else
+            benchedRetreat.getDrawable().setLevel(0);
+    }
+
+    private void  setBenchedChecked(int position){
+        for (int i=0; i < 5; i++) benched[i].setChecked((i == position) ? true : false);
+    }
 }

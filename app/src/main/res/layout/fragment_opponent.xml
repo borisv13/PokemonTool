@@ -11,7 +11,7 @@
         android:id="@+id/textHitPoints"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:text="30"
+        android:text="0"
         android:textSize="100dp"
         android:textAlignment="center"
         android:gravity="center"
@@ -28,8 +28,7 @@
         android:alpha="0.7"
         android:layout_marginLeft="20dp"
         android:layout_gravity="center|left"
-        android:textSize="50dp"
-        android:onClick="clickMinus"/>
+        android:textSize="50dp"/>
 
     <Button
         android:id="@+id/buttonPlus"
@@ -40,8 +39,7 @@
         android:alpha="0.7"
         android:layout_marginRight="20dp"
         android:layout_gravity="center|right"
-        android:textSize="50dp"
-        android:onClick="clickPlus"/>
+        android:textSize="50dp"/>
 
     <ImageButton
         android:id="@+id/buttonReset"
@@ -54,7 +52,6 @@
         android:background="@drawable/disk_reset"
         android:alpha="0.9"
         android:cropToPadding="false"
-        android:onClick="clickReset"
         android:elevation="0dp"/>
 
     <ImageButton
@@ -68,7 +65,6 @@
         android:background="@drawable/disk_bench"
         android:alpha="0.9"
         android:cropToPadding="false"
-        android:onClick="clickBench"
         android:elevation="0dp"/>
 
     <RelativeLayout
@@ -218,7 +214,7 @@
                 android:button="@null"
                 android:paddingLeft="@null"
                 android:gravity="center"
-                android:text="250"
+                android:text="0"
                 android:layout_alignParentBottom="true"/>
             <CheckBox
                 android:id="@+id/benched2"
@@ -229,7 +225,7 @@
                 android:button="@null"
                 android:paddingLeft="@null"
                 android:gravity="center"
-                android:text="250"
+                android:text="0"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/benched1"/>
             <CheckBox
@@ -241,7 +237,7 @@
                 android:button="@null"
                 android:paddingLeft="@null"
                 android:gravity="center"
-                android:text="250"
+                android:text="0"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/benched2"/>
             <CheckBox
@@ -253,7 +249,7 @@
                 android:button="@null"
                 android:paddingLeft="@null"
                 android:gravity="center"
-                android:text="250"
+                android:text="0"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/benched3"/>
             <CheckBox
@@ -265,7 +261,7 @@
                 android:button="@null"
                 android:paddingLeft="@null"
                 android:gravity="center"
-                android:text="250"
+                android:text="0"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/benched4"/>
         </RelativeLayout>
