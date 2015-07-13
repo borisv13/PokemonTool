@@ -40,11 +40,14 @@ public class MainActivity extends Activity
     private int paralyzeCount = 0;
     private int confuseCount = 0;
 
+/*
+
     @Override
     public void onFragmentInteraction(Uri uri) {
         // default empty placeholder to communicate with OpponentFragment
-
     }
+
+*/
 
     @Override
     public void onSpecialConditionRaised(CONDITION condition){
@@ -114,8 +117,12 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            OpponentFragment opponent1 = OpponentFragment.newInstance(false, 0, false, false, false, false, false, 0, 0, 0, 0, 0, false, false, false, false, false, false);
-            OpponentFragment opponent2 = OpponentFragment.newInstance(true, 0, false, false, false, false, false, 0, 0, 0, 0, 0, false, false, false, false, false, false);
+            int[] intArray1 = new int[] {0, 0, 0, 0, 0};
+            int[] intArray2 = new int[] {0, 0, 0, 0, 0};
+            boolean[] boolArray1 = new boolean[] {false, false, false, false, false};
+            boolean[] boolArray2 = new boolean[] {false, false, false, false, false};
+            OpponentFragment opponent1 = OpponentFragment.newInstance(false, 0, false, false, false, false, false, intArray1, false, boolArray1);
+            OpponentFragment opponent2 = OpponentFragment.newInstance(true, 0, false, false, false, false, false, intArray2, false, boolArray2);
             getFragmentManager()
                     .beginTransaction()
                     .add(R.id.fieldLayout, opponent2)
