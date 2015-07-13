@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -161,7 +162,9 @@ public class OpponentFragment extends Fragment
         widgetsDcBench[2] = (CheckBox) containerBench.findViewById(R.id.benched3);
         widgetsDcBench[3] = (CheckBox) containerBench.findViewById(R.id.benched4);
         widgetsDcBench[4] = (CheckBox) containerBench.findViewById(R.id.benched5);
-        widgetBenchAction = (ImageButton) containerBench.findViewById(R.id.buttonBenchRetreat);
+        widgetBenchMinus = (Button) containerBench.findViewById(R.id.buttonBenchMinus);
+        widgetBenchPlus = (Button) containerBench.findViewById(R.id.buttonBenchPlus);
+        widgetBenchAction = (ImageButton) containerBench.findViewById(R.id.buttonBenchAction);
 
         //customize top opponent's fieldView appearance == dark condition buttons, white damage counter text
         if (mIsDark) {
@@ -209,17 +212,14 @@ public class OpponentFragment extends Fragment
         setChildrenOnclickListener(v);
         widgetActiveMinus.setOnLongClickListener(this);
         widgetActivePlus.setOnLongClickListener(this);
-//        widgetBenchMinus.setOnLongClickListener(this);
-//        widgetBenchPlus.setOnLongClickListener(this);
+        widgetBenchMinus.setOnLongClickListener(this);
+        widgetBenchPlus.setOnLongClickListener(this);
 
         return v;
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
-        //TODO: Save fragment state; don't forget about the Activity
-        // http://stackoverflow.com/questions/15608709/using-onsaveinstancestate-with-fragments-in-backstack
-        // +pg.32
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putBoolean(ARG_TYPE_DARK, mIsDark);
@@ -233,17 +233,6 @@ public class OpponentFragment extends Fragment
         savedInstanceState.putBoolean(ARG_BENCH_VISIBLE, mIsBenchVisible);
         savedInstanceState.putBooleanArray(ARG_CHK_BENCH, mIsCheckedBench);
     }
-
-/*
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-*/
 
     @Override
     public void onAttach(Activity activity) {
@@ -289,18 +278,16 @@ public class OpponentFragment extends Fragment
                 break;
 
             case R.id.buttonBenchPlus:
-                for (int i = 0; i < 5; i++){
+                for (int i = 0; i < 5; i++)
                     if (widgetsDcBench[i].isChecked())
-                        mDamageCounterBench[i] = incrementDC(mDamageCounterBench[i], 10, widgetsDcBench[i], Color.BLACK);
-                }
+                        mDamageCounterBench[i] = incrementDC(mDamageCounterBench[i], 50, widgetsDcBench[i], Color.BLACK);
                 setBenchActionButtonState();
                 break;
 
             case R.id.buttonBenchMinus:
-                for (int i = 0; i < 5; i++){
+                for (int i = 0; i < 5; i++)
                     if (widgetsDcBench[i].isChecked())
-                        mDamageCounterBench[i] = incrementDC(mDamageCounterBench[i], -10, widgetsDcBench[i], Color.BLACK);
-                }
+                        mDamageCounterBench[i] = incrementDC(mDamageCounterBench[i], -50, widgetsDcBench[i], Color.BLACK);
                 setBenchActionButtonState();
                 break;
         }
@@ -331,8 +318,7 @@ public class OpponentFragment extends Fragment
                 setBenchActionButtonState();
                 mIsBenchVisible = setBenchVisibility(!mIsBenchVisible);
                 if (!mIsBenchVisible){
-                    for (int i = 0; i < 5; i++)
-                        widgetsDcBench[i].setChecked(false);
+                    setAllBenchIsChecked(false);
                 }
                 break;
 
@@ -350,10 +336,11 @@ public class OpponentFragment extends Fragment
                 setBenchActionButtonState();
                 break;
 
-            case R.id.buttonBenchRetreat:
+            case R.id.buttonBenchAction:
                 switch (widgetBenchAction.getDrawable().getLevel()){
-                    case 0: // select all
-                        for (int i = 0; i < 5; i++) widgetsDcBench[i].setChecked(true);
+                    case 0: // select / deselect all
+                        boolean newState = !mIsCheckedBench[0]; // all 5 will be in the same state
+                        setAllBenchIsChecked(newState);
                         break;
                     case 1: //swap
                         //find the selected spot on the bench
@@ -370,23 +357,23 @@ public class OpponentFragment extends Fragment
                 break;
 
             case R.id.benched1:
-                setBenchChecked(0);
+                setBenchIsChecked(0);
                 setBenchActionButtonState();
                 break;
             case R.id.benched2:
-                setBenchChecked(1);
+                setBenchIsChecked(1);
                 setBenchActionButtonState();
                 break;
             case R.id.benched3:
-                setBenchChecked(2);
+                setBenchIsChecked(2);
                 setBenchActionButtonState();
                 break;
             case R.id.benched4:
-                setBenchChecked(3);
+                setBenchIsChecked(3);
                 setBenchActionButtonState();
                 break;
             case R.id.benched5:
-                setBenchChecked(4);
+                setBenchIsChecked(4);
                 setBenchActionButtonState();
                 break;
 
@@ -535,7 +522,7 @@ public class OpponentFragment extends Fragment
             widgetBenchAction.getDrawable().setLevel(0);
     }
 
-    private void setBenchChecked(int position){
+    private void setBenchIsChecked(int position){
         for (int i=0; i < 5; i++) {
             if (i == position) {
                 widgetsDcBench[i].setChecked(true);
@@ -546,4 +533,12 @@ public class OpponentFragment extends Fragment
             }
         }
     }
+
+    private void setAllBenchIsChecked(boolean state) {
+        for (int i = 0; i < 5; i++) {
+            widgetsDcBench[i].setChecked(state);
+            mIsCheckedBench[i] = state;
+        }
+    }
+
 }

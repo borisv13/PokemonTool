@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -128,6 +129,8 @@ public class MainActivity extends Activity
                     .add(R.id.fieldLayout, opponent2)
                     .add(R.id.fieldLayout, opponent1)
                     .commit();
+        } else {
+            ((ImageButton) findViewById(R.id.buttonCoin)).getDrawable().setLevel(savedInstanceState.getInt("COIN_STATE"));
         }
 
         startRepeatingTask();
@@ -136,7 +139,19 @@ public class MainActivity extends Activity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt("COIN_STATE", ((ImageButton) findViewById(R.id.buttonCoin)).getDrawable().getLevel());
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // persist instance here (Save Game)
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // stuff to be done before exit from the app
     }
 
     @Override
