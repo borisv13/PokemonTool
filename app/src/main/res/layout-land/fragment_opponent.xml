@@ -1,0 +1,271 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.boris.pokemontool.OpponentFragment"
+    android:layout_weight="50"
+    android:background="#FFFFFF"
+    android:rotation="0">
+
+    <TextView
+        android:id="@+id/textHitPoints"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="0"
+        android:textSize="90dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:typeface="sans"
+        android:singleLine="true" />
+
+    <Button
+        android:id="@+id/buttonMinus"
+        android:text="@string/minus"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:background="#616161"
+        android:alpha="0.7"
+        android:layout_marginLeft="25dp"
+        android:layout_gravity="center|left"
+        android:textSize="32dp"/>
+
+    <Button
+        android:id="@+id/buttonPlus"
+        android:text="+"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:background="#616161"
+        android:alpha="0.7"
+        android:layout_marginRight="25dp"
+        android:layout_gravity="center|right"
+        android:textSize="32dp"/>
+
+    <ImageButton
+        android:id="@+id/buttonReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|left"
+        android:layout_marginBottom="55dp"
+        android:layout_marginLeft="50dp"
+        android:src="@drawable/reset"
+        android:background="@drawable/disk_reset"
+        android:alpha="0.9"
+        android:cropToPadding="false"
+        android:elevation="0dp"/>
+
+    <ImageButton
+        android:id="@+id/buttonBench"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|right"
+        android:layout_marginBottom="55dp"
+        android:layout_marginRight="50dp"
+        android:src="@drawable/bench"
+        android:background="@drawable/disk_bench"
+        android:alpha="0.9"
+        android:cropToPadding="false"
+        android:elevation="0dp"/>
+
+    <RelativeLayout
+        android:id="@+id/conditionButtonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+
+        <ToggleButton
+            android:id="@+id/buttonAsleep"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            android:button="@drawable/asleep_selector"
+            android:background="@drawable/disk"
+            android:textOn="@null"
+            android:textOff="@null"
+            android:elevation="2dp"
+            android:layout_alignParentBottom="true"/>
+
+        <!-- background : Non-transparent shape will provide elevation effect (shadow)
+            Vector drawable, transparent or not, will result in no elevation -->
+
+        <ToggleButton
+            android:id="@+id/buttonConfused"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            android:button="@drawable/confused_selector"
+            android:background="@drawable/disk"
+            android:textOn="@null"
+            android:textOff="@null"
+            android:elevation="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/buttonAsleep"/>
+
+
+        <ToggleButton
+            android:id="@+id/buttonParalyzed"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="16dp"
+            android:button="@drawable/paralyzed_selector"
+            android:background="@drawable/disk"
+            android:textOn="@null"
+            android:textOff="@null"
+            android:elevation="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/buttonConfused"/>
+
+
+        <ToggleButton
+            android:id="@+id/buttonBurned"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            android:button="@drawable/burned_selector"
+            android:background="@drawable/disk"
+            android:textOn="@null"
+            android:textOff="@null"
+            android:elevation="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/buttonParalyzed"/>
+
+
+        <ToggleButton
+            android:id="@+id/buttonPoisoned"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="4dp"
+            android:button="@drawable/poisoned_selector"
+            android:background="@drawable/disk"
+            android:textOn="@null"
+            android:textOff="@null"
+            android:elevation="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/buttonBurned"/>
+
+    </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/benchLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="85dp"
+        android:layout_gravity="bottom|center"
+        android:background="#fa7e7e7e"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/buttonBenchMinus"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="@string/minus"
+            android:background="#616161"
+            android:alpha="0.7"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_gravity="top|left"
+            android:textStyle="bold"
+            android:textSize="22dp"
+            android:textColor="#FFFFFFFF"/>
+
+        <Button
+            android:id="@+id/buttonBenchPlus"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="+"
+            android:background="#616161"
+            android:alpha="0.7"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="top|right"
+            android:textStyle="bold"
+            android:textSize="22dp"
+            android:textColor="#FFFFFFFF"/>
+
+        <ImageButton
+            android:id="@+id/buttonBenchAction"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/retreat_leveled"
+            android:background="#616161"
+            android:alpha="0.7"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="70dp"
+            android:layout_gravity="top|right"/>
+
+        <RelativeLayout
+            android:id="@+id/benchedPokemonLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="64dp"
+            android:layout_gravity="bottom|center"
+            android:gravity="center_horizontal"
+            >
+
+            <CheckBox
+                android:id="@+id/benched1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/pokeball_checkbox_selector"
+                android:button="@null"
+                android:paddingLeft="@null"
+                android:gravity="center"
+                android:text="0"
+                android:layout_alignParentBottom="true"/>
+            <CheckBox
+                android:id="@+id/benched2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/pokeball_checkbox_selector"
+                android:button="@null"
+                android:paddingLeft="@null"
+                android:gravity="center"
+                android:text="0"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/benched1"/>
+            <CheckBox
+                android:id="@+id/benched3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/pokeball_checkbox_selector"
+                android:button="@null"
+                android:paddingLeft="@null"
+                android:gravity="center"
+                android:text="0"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/benched2"/>
+            <CheckBox
+                android:id="@+id/benched4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/pokeball_checkbox_selector"
+                android:button="@null"
+                android:paddingLeft="@null"
+                android:gravity="center"
+                android:text="0"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/benched3"/>
+            <CheckBox
+                android:id="@+id/benched5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/pokeball_checkbox_selector"
+                android:button="@null"
+                android:paddingLeft="@null"
+                android:gravity="center"
+                android:text="0"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/benched4"/>
+        </RelativeLayout>
+    </FrameLayout>
+
+</FrameLayout>
