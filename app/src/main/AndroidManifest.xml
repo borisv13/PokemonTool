@@ -18,22 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".PlayerNotesDatabaseActivity"
-            android:label="@string/title_activity_player_notes_database"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.boris.pokemontool.MainActivity" />
-        </activity>
-        <activity
-            android:name=".PlayerNotesActivity"
-            android:label="@string/title_activity_player_notes"
-            android:parentActivityName=".PlayerNotesDatabaseActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.boris.pokemontool.PlayerNotesDatabaseActivity" />
-        </activity>
     </application>
 
 </manifest>

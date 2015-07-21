@@ -172,17 +172,9 @@ public class MainActivity extends Activity
         switch(id) {
             case R.id.action_settings:
                 return true;
-            case R.id.action_player_notes:
-                goToPlayerNotes();
-                return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void goToPlayerNotes() {
-        Intent intent = new Intent(this, PlayerNotesDatabaseActivity.class);
-        startActivity(intent);
     }
 
 
