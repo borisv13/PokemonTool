@@ -3,14 +3,13 @@ package com.boris.pokemontool;
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.LevelListDrawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,11 +22,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-
-import android.widget.TextView;
-import android.widget.ToggleButton;
 
 public class MainActivity extends Activity
         implements OpponentFragment.OnFragmentInteractionListener{
@@ -117,6 +112,14 @@ public class MainActivity extends Activity
         getActionBar().hide();
         setContentView(R.layout.activity_main);
 
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (preferences.getBoolean("pref_screenRotation",false))
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        else
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
         if (savedInstanceState == null) {
             int[] intArray1 = new int[] {0, 0, 0, 0, 0};
             int[] intArray2 = new int[] {0, 0, 0, 0, 0};
@@ -171,6 +174,11 @@ public class MainActivity extends Activity
         //noinspection SimplifiableIfStatement
         switch(id) {
             case R.id.action_settings:
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(android.R.id.content, new SettingsFragment())
+                        .addToBackStack(null)
+                        .commit();
                 return true;
         }
 

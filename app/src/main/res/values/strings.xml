@@ -13,6 +13,7 @@
 
     <string name="add_db">Add to DB</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pref_screenRotation">Screen rotation</string>
+    <string name="pref_screenRotation_summOn">On</string>
+    <string name="pref_screenRotation_summOff">Off</string>
 </resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="pref_screenRotation"
+        android:title="@string/pref_screenRotation"
+        android:summaryOn="@string/pref_screenRotation_summOn"
+        android:summaryOff="@string/pref_screenRotation_summOff"
+        android:defaultValue="false"/>
+
+</PreferenceScreen>
